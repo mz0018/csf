@@ -1,0 +1,61 @@
+import { 
+  FaLandmark, 
+  FaUsers, 
+  FaFileAlt, 
+  FaCalculator, 
+  FaMoneyBill, 
+  FaCoins, 
+  FaTools, 
+  FaClipboardList, 
+  FaUserTie, 
+  FaRegChartBar, 
+  FaMapMarkedAlt, 
+  FaSeedling, 
+  FaHospital, 
+  FaBuilding, 
+  FaExclamationTriangle, 
+  FaStore, 
+  FaPaw, 
+  FaUser, 
+  FaUmbrella, 
+  FaLaptop, 
+  FaFlask, 
+  FaCapsules, 
+  FaTooth,   
+  FaSyringe   
+} from "react-icons/fa";
+
+import { FaPills, FaSmile, FaSyringe as FaInjection } from "react-icons/fa"; 
+
+export const offices = [
+  { id: 1, name: "Municipal Mayor's Office (MMO)", services: [], icon: FaLandmark },
+  { id: 2, name: "Municipal Social Welfare and Development Office (MSWDO)", services: [], icon: FaUsers },
+  { id: 3, name: "Municipal Civil Registry Office (MCRO)", services: [], icon: FaFileAlt },
+  { id: 4, name: "Municipal Assessor's Office (MAO)", services: [], icon: FaCalculator },
+  { id: 5, name: "Municipal Accounting Office (MACCO)", services: [], icon: FaMoneyBill },
+  { id: 6, name: "Municipal Treasury Office (MTO)", services: [], icon: FaCoins },
+  { id: 7, name: "Municipal Engineering Office (MEO)", services: [], icon: FaTools },
+  { id: 8, name: "Business Permit and Licensing Section (BPLS)", services: [], icon: FaClipboardList },
+  { id: 9, name: "Human Resource Management Office (HRMO)", services: [], icon: FaUserTie },
+  { id: 10, name: "Municipal Budget Office (MBO)", services: [], icon: FaRegChartBar },
+  { id: 11, name: "Municipal Planning and Development Office (MPDO)", services: [], icon: FaMapMarkedAlt },
+  { id: 12, name: "Municipal Agriculture Office (MAGRO)", services: [], icon: FaSeedling },
+  { id: 13, name: "Municipal Health Office (MHO)", services: [], icon: FaHospital },
+  { id: 14, name: "Municipal General Service Office (MGSO)", services: [], icon: FaBuilding },
+  { id: 15, name: "Municipal Disaster Risk Reduction Management Office (MDRRMO)", services: [], icon: FaExclamationTriangle },
+  { id: 16, name: "SEEDO-Market", services: [], icon: FaStore },
+  { id: 17, name: "SEEDO-Slaughter", services: [], icon: FaPaw },
+  { id: 18, name: "Office of the Senior Citizen's Affairs (OSCA)", services: [], icon: FaUser },
+  { id: 19, name: "MMO-Tourism Section", services: [], icon: FaUmbrella },
+  { 
+    id: 20,
+    name: "MMO-Information and Technology Section",
+    services: [
+      { id: 201, name: { en: "Request for tarpaulin layout", tl: "Paghiling para sa layout ng tarpaulin" } },
+      { id: 202, name: { en: "Request for computer hardware repair", tl: "Paghiling para sa pag-aayos ng computer hardware" } },
+      { id: 203, name: { en: "ICT Preventive maintenance", tl: "Pang-iwas na maintenance ng ICT" } },
+      { id: 204, name: { en: "Other service (please specify)", tl: "Iba pang serbisyo (paki-tukoy)" } },
+    ],
+    icon: FaLaptop
+ },
+];

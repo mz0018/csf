@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: rate-backend
+    restart: always
+    ports:
+      - "5001:5001"
+    environment:
+      - PORT=5001
+      - JWT_SECRET=your_super_secret_key
+      - MONGO_URI=mongodb+srv://suomynona0013_db_user:0WI1ADo31KZvRCu3@rateme.wy2l6ki.mongodb.net/?appName=rateMe
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: rate-frontend
+    ports:
+      - "5173:3000"
+
+  admin:
+    build:
+      context: ./admin
+      dockerfile: Dockerfile
+    container_name: rate-admin
+    ports:
+      - "5174:3000"
+
+
+

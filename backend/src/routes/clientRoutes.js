@@ -1,0 +1,18 @@
+const express = require('express');
+const ClientController = require('../controllers/ClientController');
+const protect = require('../middleware/authMiddleware');
+const adminQueueLimiter = require('../middleware/adminQueueLimiter');
+const loginLimiter = require('../middleware/loginLimiter');
+
+const router = express.Router();
+
+//check this route on app.js
+router.post('/submit', (req, res) => ClientController.saveFeedback(req, res));
+router.post('/signin', loginLimiter, (req, res) => ClientController.verifyClientAdmin(req, res));
+router.post('/logout', (req, res) => ClientController.logout(req, res));
+router.post('/queue/generate/:id', protect, adminQueueLimiter, ClientController.generateQueueNumber);
+
+router.get('/me', protect, (req, res) => ClientController.getCurrentUser(req, res));
+router.get('/getqueue/:id', protect, ClientController.getAllQueue);
+
+module.exports = router;
