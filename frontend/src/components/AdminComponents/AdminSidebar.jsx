@@ -21,7 +21,7 @@ const AdminSidebar = ({ open, onClose, setActiveSection }) => {
 
   return (
     <>
-      <aside className="hidden sm:block row-span-2 bg-[var(--heading-color)] shadow-lg p-4">
+      <aside className="hidden sm:block row-span-2 bg-[var(--sidebar-color)] shadow-lg p-4">
         <SidebarContent role={user?.role} onClose={onClose} />
       </aside>
 

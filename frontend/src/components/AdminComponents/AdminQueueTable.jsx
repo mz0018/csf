@@ -1,8 +1,9 @@
-import React, { lazy } from "react";
+import React, { lazy, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import useAdminQueueTable from "../../hooks/useAdminQueueTable";
 import { Copy } from "lucide-react";
-
+import { Notyf } from "notyf";
+import "notyf/notyf.min.css";
 
 const BtnGenerateQueueNum = lazy(() => import('../../buttons/BtnGenerateQueueNum'));
 
@@ -10,8 +11,35 @@ const AdminQueueTable = () => {
   const { user } = useAuth();
   const { list, isLoading, error, isOnline, page, totalPages, limit, goPrev, goNext } = useAdminQueueTable(user);
 
+  const notyf = new Notyf({
+    position: { x: "right", y: "top" },
+    duration: 2000,
+    types: [
+      { type: "success", background: "green", icon: false },
+      { type: "error", background: "red", icon: false }
+    ]
+  });
+
+  const lastCopiedRef = useRef(null);
+
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading queue.</p>;
+
+  const handleCopy = (queueNumber) => {
+    if (lastCopiedRef.current === queueNumber) return;
+
+    navigator.clipboard.writeText(queueNumber)
+      .then(() => {
+        notyf.success(`${queueNumber} copied to clipboard!`);
+        lastCopiedRef.current = queueNumber;
+
+        setTimeout(() => { lastCopiedRef.current = null; }, 3000);
+      })
+      .catch((err) => {
+        console.error('Failed to copy: ', err);
+        notyf.error("Failed to copy!");
+      });
+  };
 
   return (
     <div>
@@ -30,10 +58,10 @@ const AdminQueueTable = () => {
             <table className="table-auto w-full">
               <thead>
                 <tr className="uppercase tracking-wider text-[var(--heading-color)]">
-                  <th className="border-b border-gray-200 px-6 py-6">Queue Number</th>
-                  <th className="border-b border-gray-200 px-6 py-6">Status</th>
-                  <th className="border-b border-gray-200 px-6 py-6">Date Created</th>
-                  <th className="border-b border-gray-200 px-6 py-6">Expires At</th>
+                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Queue Number</th>
+                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Status</th>
+                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Date Created</th>
+                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Expires At</th>
                 </tr>
               </thead>
               <tbody>
@@ -43,7 +71,11 @@ const AdminQueueTable = () => {
                       <div className="flex items-center gap-2 text-sm">
                         {q.queueNumber}
                         {q.status.toLowerCase() !== "expired" && (
-                          <Copy className="w-4 h-4 cursor-pointer" />
+                          <Copy
+                            className="w-4 h-4 cursor-pointer"
+                            onClick={() => handleCopy(q.queueNumber)}
+                            aria-label="Copy queue number"
+                          />
                         )}
                       </div>
                     </td>
@@ -69,6 +101,7 @@ const AdminQueueTable = () => {
             </table>
           </div>
 
+          {/* Mobile Table */}
           <div className="sm:hidden overflow-x-auto mt-4">
             <table className="table-auto w-full text-sm">
               <thead>
@@ -94,23 +127,23 @@ const AdminQueueTable = () => {
         </>
       )}
 
-      <div className="flex gap-2 mt-4 text-sm sm:text-base">
+      <div className="flex gap-2 mt-4 text-sm sm:text-base justify-end items-center">
         <button
           disabled={page === 1}
           onClick={goPrev}
-          className="px-2 py-1 sm:px-3 sm:py-1 border disabled:opacity-50"
+          className="px-2 py-1 sm:px-3 sm:py-1 border disabled:opacity-50 disabled:cursor-not-allowed rounded-sm text-[var(--text-color)] cursor-pointer"
         >
           Prev
         </button>
 
-        <span>
+        <span className="text-xs text-[var(--text-color)]">
           Page {page} of {totalPages}
         </span>
 
         <button
           disabled={page === totalPages}
           onClick={goNext}
-          className="px-2 py-1 sm:px-3 sm:py-1 border disabled:opacity-50"
+          className="px-2 py-1 sm:px-3 sm:py-1 border disabled:opacity-50 disabled:cursor-not-allowed rounded-sm text-[var(--text-color)] cursor-pointer"
         >
           Next
         </button>
