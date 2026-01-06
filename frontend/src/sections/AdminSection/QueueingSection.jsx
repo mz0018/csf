@@ -8,7 +8,6 @@ const QueueingSection = () => {
             <Suspense fallback={null}>
                 <AdminQueueTable />
             </Suspense>
-
         </>
     );
 };

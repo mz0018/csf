@@ -35,7 +35,7 @@ const BtnGenerateQueueNum = () => {
     }, [queue])
 
     return (
-        <button className="bg-green-500 text-white p-4 rounded-sm" disabled={loading} onClick={() => handleClick()}>
+        <button className="bg-[var(--button-color)] text-white p-4 rounded-sm cursor-pointer" disabled={loading} onClick={() => handleClick()}>
             {loading ? 'Loading...' : 'Generate Queue Number'}
         </button>
     )

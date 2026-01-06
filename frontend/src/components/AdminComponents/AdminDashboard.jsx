@@ -10,13 +10,13 @@ const AdminDashboard = () => {
 
   return (
     <Suspense fallback={<PageLoader />}>
-      <div className="h-screen grid grid-cols-1 sm:grid-cols-[16rem_1fr] grid-rows-[auto_1fr]">
+      <div data-theme="admin" className="h-screen grid grid-cols-1 sm:grid-cols-[16rem_1fr] grid-rows-[auto_1fr]">
         
           <AdminSidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
           <AdminNavbar onMenuClick={() => setSidebarOpen(true)} />
 
-        <main className="bg-gray-100 p-6 overflow-auto text-gray-900">
+        <main className="bg-[var(--bg-color)] p-6 overflow-auto text-gray-900">
             <Outlet />
         </main>
       </div>

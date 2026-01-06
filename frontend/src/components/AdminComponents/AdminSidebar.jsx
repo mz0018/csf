@@ -21,7 +21,7 @@ const AdminSidebar = ({ open, onClose, setActiveSection }) => {
 
   return (
     <>
-      <aside className="hidden sm:block row-span-2 bg-white shadow-lg p-4">
+      <aside className="hidden sm:block row-span-2 bg-[var(--heading-color)] shadow-lg p-4">
         <SidebarContent role={user?.role} onClose={onClose} />
       </aside>
 
@@ -57,7 +57,7 @@ const SidebarContent = ({ role, onClose }) => {
   const links = sidebarLinksByRole[role] || [];
 
   return (
-    <nav className="flex flex-col h-full min-h-0 text-gray-900">
+    <nav className="flex flex-col h-full min-h-0 text-white tracking-wider">
       <div className="space-y-4">
         {links.map((item, index) => (
           <NavLink
