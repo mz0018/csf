@@ -3,7 +3,9 @@ import { useAuth } from "../../context/AuthContext";
 import useAdminQueueTable from "../../hooks/useAdminQueueTable";
 import { Copy } from "lucide-react";
 import { Notyf } from "notyf";
+import { Tooltip } from "react-tooltip";
 import "notyf/notyf.min.css";
+import "react-tooltip/dist/react-tooltip.css";
 
 const BtnGenerateQueueNum = lazy(() => import('../../buttons/BtnGenerateQueueNum'));
 
@@ -66,16 +68,22 @@ const AdminQueueTable = () => {
               </thead>
               <tbody>
                 {list.map((q) => (
-                  <tr key={q._id} className="text-[var(--text-color)]">
+                  <tr
+                    key={q._id}
+                    className="text-[var(--text-color)] hover:bg-[var(--hover-color)] transition-colors"
+                  >
                     <td className="border-b border-gray-200 px-6 py-6">
                       <div className="flex items-center gap-2 text-sm">
                         {q.queueNumber}
                         {q.status.toLowerCase() !== "expired" && (
+                          <>
                           <Copy
+                            id={`copy-${q.queueNumber}`}
                             className="w-4 h-4 cursor-pointer"
                             onClick={() => handleCopy(q.queueNumber)}
-                            aria-label="Copy queue number"
                           />
+                          <Tooltip anchorId={`copy-${q.queueNumber}`} content="Copy to clipboard" />
+                          </>
                         )}
                       </div>
                     </td>
