@@ -1,9 +1,10 @@
 import React, { lazy, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import useAdminQueueTable from "../../hooks/useAdminQueueTable";
-import { Copy } from "lucide-react";
+import { Copy, MapPin } from "lucide-react";
 import { Notyf } from "notyf";
 import { Tooltip } from "react-tooltip";
+import { offices } from "../../mocks/Offices";
 import "notyf/notyf.min.css";
 import "react-tooltip/dist/react-tooltip.css";
 
@@ -12,6 +13,9 @@ const BtnGenerateQueueNum = lazy(() => import('../../buttons/BtnGenerateQueueNum
 const AdminQueueTable = () => {
   const { user } = useAuth();
   const { list, isLoading, error, isOnline, page, totalPages, limit, goPrev, goNext } = useAdminQueueTable(user);
+
+  const office = offices.find((office) => office.id === user.officeId);
+  const officeName = office ? office.name : "Unknown Office";
 
   const notyf = new Notyf({
     position: { x: "right", y: "top" },
@@ -126,7 +130,7 @@ const AdminQueueTable = () => {
             {list.map((q, index) => (
               <div
                 key={q._id}
-                className="flexrounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
+                className="flex rounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
               >
                 <div className="w-1 bg-[var(--button-color)]" />
 
@@ -136,18 +140,38 @@ const AdminQueueTable = () => {
                       Queue
                     </span>
 
-                    <span className="text-xs font-medium">
+                    <span className="text-xs font-light tracking-wider">
                       {q.status}
                     </span>
                   </div>
 
-                  <div className="mt-1 font-semibold">
-                    {q.queueNumber}
+                  <div className="mt-1 flex items-center gap-2">
+                    <span className="font-semibold text-xl">
+                      {q.queueNumber}
+                    </span>
+
+                    {q.status.toLowerCase() !== "expired" && (
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(q.queueNumber)}
+                        aria-label={`Copy queue number ${q.queueNumber}`}
+                        className="p-1 hover:opacity-80"
+                      >
+                        <Copy
+                          className="w-3 h-3 text-[var(--text-color)]"
+                          aria-hidden="true"
+                          focusable="false"
+                        />
+                      </button>
+                    )}
                   </div>
 
-                  <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2">
-                    {/* {q.status.charAt(0).toUpperCase() + q.status.slice(1).toLowerCase()} */}
-                    MMO it 
+                  <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2 flex items-center gap-1">
+                    <MapPin
+                      className="w-4 h-4 text-[var(--button-color)] shrink-0"
+                      strokeWidth={2.5}
+                    />
+                    <span>{officeName}</span>
                   </div>
 
                   <div className="mt-3 text-xs flex gap-2 uppercase text-[var(--text-color)]">
