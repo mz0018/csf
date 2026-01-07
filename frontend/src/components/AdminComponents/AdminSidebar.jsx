@@ -1,22 +1,52 @@
-import { X } from "lucide-react";
+import {
+  X,
+  ListPlus,
+  MessageSquare,
+  BarChart3,
+  Settings,
+} from "lucide-react";
 import BtnLogout from "../../buttons/BtnLogout";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const sidebarLinksByRole = {
   "office-admin": [
-    { label: "Generate Queue Number", path: "queueing" },
-    { label: "Settings", path: "settings" },
+    {
+      label: "Generate Queue",
+      path: "queueing",
+      icon: ListPlus,
+    },
+    {
+      label: "Settings",
+      path: "settings",
+      icon: Settings,
+    },
   ],
   "hr-admin": [
-    { label: "Feedback Form", path: "feedback" },
-    { label: "Generate Queue Number", path: "queueing" },
-    { label: "Analytics Report", path: "analytics" },
-    { label: "Settings", path: "settings" },
+    {
+      label: "Feedback Form",
+      path: "feedback",
+      icon: MessageSquare,
+    },
+    {
+      label: "Generate Queue",
+      path: "queueing",
+      icon: ListPlus,
+    },
+    {
+      label: "Analytics Report",
+      path: "analytics",
+      icon: BarChart3,
+    },
+    {
+      label: "Settings",
+      path: "settings",
+      icon: Settings,
+    },
   ],
 };
 
-const AdminSidebar = ({ open, onClose, setActiveSection }) => {
+const AdminSidebar = ({ open, onClose }) => {
   const { user } = useAuth();
 
   return (
@@ -33,7 +63,7 @@ const AdminSidebar = ({ open, onClose, setActiveSection }) => {
       )}
 
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform sm:hidden ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[var(--sidebar-color)] shadow-lg z-50 transform transition-transform sm:hidden ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -58,21 +88,28 @@ const SidebarContent = ({ role, onClose }) => {
 
   return (
     <nav className="flex flex-col h-full min-h-0 text-white tracking-wider">
-      <div className="space-y-4">
-        {links.map((item, index) => (
-          <NavLink
-            key={index}
-            to={item.path}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `block p-2 rounded ${
-                isActive ? "bg-gray-200 font-bold" : ""
-              }`
-            }
-          >
-            {item.label}
-          </NavLink>
-        ))}
+      <div className="space-y-2">
+        {links.map((item, index) => {
+          const Icon = item.icon;
+
+          return (
+            <NavLink
+              key={index}
+              to={item.path}
+              onClick={onClose}
+              className={({ isActive }) =>
+                `flex items-center gap-3 p-2 rounded transition-colors ${
+                  isActive
+                    ? "bg-[var(--hover-color)] font-semibold"
+                    : "text-white/80 hover:bg-white/10"
+                }`
+              }
+            >
+              <Icon size={18} className="shrink-0" />
+              <span>{item.label}</span>
+            </NavLink>
+          );
+        })}
       </div>
 
       <div className="mt-auto p-4">
