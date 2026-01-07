@@ -9,7 +9,7 @@ const adminQueueLimiter = rateLimit({
 
         return res.status(429).json({
             success: false,
-            message: "Please wait before generating more queue numbers."
+            message: "Too many requests. Please wait."
         });
     }
 });

@@ -1,6 +1,7 @@
 import React, { lazy, useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import useAdminQueueTable from "../../hooks/useAdminQueueTable";
+import NoQueueFound from "../../fallbacks/NoQueueFound";
 import { Copy, MapPin } from "lucide-react";
 import { Notyf } from "notyf";
 import { Tooltip } from "react-tooltip";
@@ -9,6 +10,7 @@ import "notyf/notyf.min.css";
 import "react-tooltip/dist/react-tooltip.css";
 
 const BtnGenerateQueueNum = lazy(() => import('../../buttons/BtnGenerateQueueNum'));
+
 
 const AdminQueueTable = () => {
   const { user } = useAuth();
@@ -57,7 +59,9 @@ const AdminQueueTable = () => {
       </div>
 
       {list.length === 0 ? (
-        <p>No queues found.</p>
+        <div className="mt-5">
+          <NoQueueFound />
+        </div>
       ) : (
         <>
           <div className="bg-[var(--table-color)] hidden sm:block overflow-x-auto mt-4 text-left">
@@ -186,6 +190,7 @@ const AdminQueueTable = () => {
                     <span>|</span>
 
                     <span>
+                      Expires at:&nbsp;
                       {q.status.toLowerCase() === "expired"
                         ? "-- : --"
                         : new Date(q.expiresAt).toLocaleTimeString([], {
