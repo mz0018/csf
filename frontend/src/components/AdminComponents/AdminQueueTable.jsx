@@ -77,12 +77,24 @@ const AdminQueueTable = () => {
                         {q.queueNumber}
                         {q.status.toLowerCase() !== "expired" && (
                           <>
-                          <Copy
-                            id={`copy-${q.queueNumber}`}
-                            className="w-4 h-4 cursor-pointer"
-                            onClick={() => handleCopy(q.queueNumber)}
-                          />
-                          <Tooltip anchorId={`copy-${q.queueNumber}`} content="Copy to clipboard" />
+                          <button
+                              type="button"
+                              id={`copy-${q.queueNumber}`}
+                              onClick={() => handleCopy(q.queueNumber)}
+                              aria-label={`Copy queue number ${q.queueNumber}`}
+                              className="p-1 hover:opacity-80"
+                            >
+                              <Copy
+                                className="w-4 h-4"
+                                aria-hidden="true"
+                                focusable="false"
+                              />
+                            </button>
+
+                            <Tooltip
+                              anchorId={`copy-${q.queueNumber}`}
+                              content="Copy to clipboard"
+                            />
                           </>
                         )}
                       </div>
@@ -109,28 +121,58 @@ const AdminQueueTable = () => {
             </table>
           </div>
 
-          {/* Mobile Table */}
-          <div className="sm:hidden overflow-x-auto mt-4">
-            <table className="table-auto w-full text-sm">
-              <thead>
-                <tr className="text-xs">
-                  <th className="border-b px-2 py-1">#</th>
-                  <th className="border-b px-2 py-1">Queue Number</th>
-                  <th className="border-b px-2 py-1">Status</th>
-                  <th className="border-b px-2 py-1">Expires At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {list.map((q, index) => (
-                  <tr key={q._id}>
-                    <td className="border-b px-2 py-1">{index + 1 + (page - 1) * limit}</td>
-                    <td className="border-b px-2 py-1">{q.queueNumber}</td>
-                    <td className="border-b px-2 py-1">{q.status}</td>
-                    <td className="border-b px-2 py-1">{new Date(q.expiresAt).toLocaleTimeString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          {/* Mobile screen card part */}
+          <div className="sm:hidden mt-4 space-y-3">
+            {list.map((q, index) => (
+              <div
+                key={q._id}
+                className="flexrounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
+              >
+                <div className="w-1 bg-[var(--button-color)]" />
+
+                <div className="flex-1 p-3">
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs uppercase text-[var(--text-color)]">
+                      Queue
+                    </span>
+
+                    <span className="text-xs font-medium">
+                      {q.status}
+                    </span>
+                  </div>
+
+                  <div className="mt-1 font-semibold">
+                    {q.queueNumber}
+                  </div>
+
+                  <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2">
+                    {/* {q.status.charAt(0).toUpperCase() + q.status.slice(1).toLowerCase()} */}
+                    MMO it 
+                  </div>
+
+                  <div className="mt-3 text-xs flex gap-2 uppercase text-[var(--text-color)]">
+                    <span>
+                      {new Date(q.createdAt).toLocaleDateString("en-US", {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </span>
+
+                    <span>|</span>
+
+                    <span>
+                      {q.status.toLowerCase() === "expired"
+                        ? "-- : --"
+                        : new Date(q.expiresAt).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </>
       )}

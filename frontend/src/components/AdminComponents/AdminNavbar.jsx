@@ -14,7 +14,7 @@ const AdminNavbar = ({ onMenuClick }) => {
 
             <button
                 onClick={onMenuClick}
-                className="sm:hidden"
+                className="sm:hidden text-[var(--text-color)] focus:outline-none"
                 aria-label="Open sidebar"
             >
                 <Menu size={24} />
