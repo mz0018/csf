@@ -2,11 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
 import { TicketPlus, Loader } from "lucide-react";
+import { Notyf } from "notyf";
+import "notyf/notyf.min.css";
 
 const BtnGenerateQueueNum = () => {
     const [queue, setQueue] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [rateLimited, setRateLimited] = useState(false);
     const { user } = useAuth();
+
+    const notyf = new Notyf({
+        position: { x: "right", y: "top" },
+        duration: 3000,
+        types: [
+            { type: "success", background: "green", icon: false },
+            { type: "error", background: "red", icon: false }
+        ]
+    });
 
     const handleClick = async () => {
         if (!user.officeId) {
@@ -14,19 +26,30 @@ const BtnGenerateQueueNum = () => {
             return;
         }
 
+        if (rateLimited) return;
+
         try {
             setLoading(true);
 
-            // await new Promise((resolve) => setTimeout(resolve, 10000));
-
             const response = await api.post(`client/queue/generate/${user.officeId}`);
-            
+
             if (response.data?.success === true) {
                 setQueue(response.data);
+                notyf.success(`${response.data.queueNumber} generated successfully!`);
             }
 
         } catch (err) {
-            console.error('Something went wrong: ', err);
+            if (err.response && err.response.status === 429) {
+                if (!rateLimited) {
+                    notyf.error(err.response.data.message || "Too many requests. Please wait.");
+                    setRateLimited(true);
+
+                    setTimeout(() => setRateLimited(false), 10000);
+                }
+            } else {
+                notyf.error("Something went wrong!");
+                console.error("Error generating queue:", err);
+            }
         } finally {
             setLoading(false);
         }
@@ -39,8 +62,10 @@ const BtnGenerateQueueNum = () => {
     return (
         <button
             onClick={handleClick}
-            disabled={loading}
-            className="text-sm flex items-center gap-2 bg-[var(--button-color)] hover:bg-[var(--btn-hover-color)] text-white px-6 py-4 rounded-sm cursor-pointer transition tracking-wide justify-center"
+            disabled={loading || rateLimited}
+            className={`text-sm flex items-center gap-2 bg-[var(--button-color)] hover:bg-[var(--btn-hover-color)] text-white px-6 py-4 rounded-sm cursor-pointer transition tracking-wide justify-center ${
+                loading || rateLimited ? "opacity-50 cursor-not-allowed" : ""
+            }`}
         >
             {loading ? (
                 <>
