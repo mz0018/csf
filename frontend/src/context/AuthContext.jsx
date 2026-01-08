@@ -22,17 +22,20 @@ export const AuthProvider = ({ children }) => {
     loadUser();
   }, []);
 
-  const login = (userData) => {
+  const login = (userData, token) => {
     setUser(userData);
+    localStorage.setItem('access_token', token);
     console.table(userData);
   };
 
   const logout = async () => {
     try {
       await api.post("/client/logout");
+      localStorage.removeItem('access_token');
     } catch {
-      setUser(null);
+      // ignore
     }
+    setUser(null);
   };
 
   return (

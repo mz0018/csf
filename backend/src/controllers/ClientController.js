@@ -108,6 +108,7 @@ class ClientController {
             }).status(200).json({
                 success: true,
                 message: "Login successfull",
+                token: token, // Add token to response
                 data: {
                     _id: officeAdmin._id,
                     username: officeAdmin.username,
