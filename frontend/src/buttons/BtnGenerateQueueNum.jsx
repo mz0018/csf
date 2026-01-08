@@ -4,12 +4,15 @@ import api from "../services/api";
 import { TicketPlus, Loader } from "lucide-react";
 import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
+import usePrintHook from "../hooks/usePrintHook";
 
 const BtnGenerateQueueNum = () => {
     const [queue, setQueue] = useState([]);
     const [loading, setLoading] = useState(false);
     const [rateLimited, setRateLimited] = useState(false);
     const { user } = useAuth();
+
+    const { printQueueTicket } = usePrintHook();
 
     const notyf = new Notyf({
         position: { x: "right", y: "top" },
@@ -36,6 +39,11 @@ const BtnGenerateQueueNum = () => {
             if (response.data?.success === true) {
                 setQueue(response.data);
                 notyf.success(`${response.data.queueNumber} generated successfully!`);
+
+                printQueueTicket(
+                    response.data.queueNumber,
+                    response.data.expiresAt,
+                );
             }
 
         } catch (err) {
