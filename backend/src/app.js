@@ -39,6 +39,22 @@ app.get("/", (req, res) => {
     res.send("Backend 201");
 });
 
+app.use((req, res, next) => {
+    if (!req.cookies.clientId) {
+        const { randomUUID } = require('crypto');
+        const clientId = randomUUID();
+
+        res.cookie('clientId', clientId, {
+            httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24 * 30,
+            sameSite: 'Strict',
+        });
+
+        req.cookies.clientId = clientId;
+    }
+    next();
+});
+
 app.use("/client", clientRoutes);
 
 app.use("/it", superAdminRoutes);

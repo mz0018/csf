@@ -7,8 +7,10 @@ const globalQueueLimiter = rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
 
+  keyGenerator: (req) => req.cookies.clientId,
+
   handler: (req, res) => {
-    console.log(`IP ${req.ip} hit global rate limit at ${new Date().toISOString()}`);
+    console.log(`IP ${req.cookies.clientId} hit global rate limit at ${new Date().toISOString()}`);
 
     return res.status(429).json({
       success: false,
