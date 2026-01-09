@@ -3,7 +3,6 @@ import FormLoader from "../fallbacks/FormLoader";
 import useFormSubmission from "../hooks/useFormSubmission";
 
 const Reminder = lazy(() => import("./Reminder"));
-const SelectOffice = lazy(() => import("../forms/SelectOffice"));
 const VerifyQueueForm = lazy(() => import("../forms/VerifyQueueForm"));
 const TypesOfServices = lazy(() => import("../forms/TypesOfServices"));
 const DemographicForm = lazy(() => import("../forms/DemographicForm"));
@@ -27,13 +26,9 @@ const Main = () => {
   };
 
   //VERIFY QUEUE FORM
-  const handleVerifyQueue = () => {
+  const handleVerifyQueue = (officeId) => {
+    formHook.updateOffice(officeId);
     setShowVerifyQueueForm(false);
-  };
-
-  // SELECT OFFICE -> RESPONDENT PROFILE
-  const handleSelectOffice = (office) => {
-    formHook.updateOffice(office);
     setShowRespondent(true);
   };
 
@@ -45,7 +40,8 @@ const Main = () => {
 
   const handleBackFromRespondent = () => {
     setShowRespondent(false);
-    // formHook.updateOffice(null);
+    setShowVerifyQueueForm(true);
+    formHook.updateOffice(null);
   };
 
   // TYPES OF SERVICES -> DEMOGRAPHIC
@@ -132,13 +128,6 @@ const Main = () => {
 
         {!showReminder && (
           <>
-            {/* SELECT OFFICE */}
-            {!showVerifyQueueForm && !formHook.selectedOffice && !showRespondent && (
-              <Suspense fallback={<FormLoader />}>
-                <SelectOffice setSelectedOffice={handleSelectOffice} />
-              </Suspense>
-            )}
-
             {/* RESPONDENT PROFILE */}
             {showRespondent && (
               <Suspense fallback={<FormLoader />}>

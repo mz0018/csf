@@ -10,13 +10,7 @@ const TypesOfServices = ({ selectedOffice, setSelectedOffice, onNext, onBack }) 
 
   if (!selectedOffice) return null;
 
-  const officeObj = offices.find(
-    (office) =>
-      office.name === selectedOffice ||
-      office.sections?.some(
-        (section) => `${office.name} - ${section.name}` === selectedOffice
-      )
-  );
+  const officeObj = offices.find(office => office.id === selectedOffice);
 
   let services = [];
   if (officeObj?.sections) {

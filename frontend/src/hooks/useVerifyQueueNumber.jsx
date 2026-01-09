@@ -6,13 +6,15 @@ const useVerifyQueueNumber = (queueNumber) => {
     const [hasError, setHasError] = useState(null);
 
     const handleVerification = async () => {
-        // console.log(queueNumber);
         try {
             setLoading(true);
             setHasError(null);
 
             const response = await api.post("/client/verify-queue", { queueNumber });
-            console.table(response.data.ticket);
+            const QueueTicket = response.data.ticket;
+
+            console.log(QueueTicket.officeId);
+
             return response.data;
         } catch (error) {
             console.error("Error verifying queue number:", error);
