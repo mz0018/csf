@@ -26,8 +26,8 @@ const Main = () => {
     setShowVerifyQueueForm(true);
   };
 
-  const handleVerifyQueue = (queueNumber) => {
-    // TODO: Add verification logic here, e.g., API call to verify queue
+  //VERIFY QUEUE FORM
+  const handleVerifyQueue = () => {
     setShowVerifyQueueForm(false);
   };
 

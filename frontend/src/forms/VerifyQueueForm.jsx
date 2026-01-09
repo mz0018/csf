@@ -17,8 +17,6 @@ const VerifyQueueForm = ({ onNext }) => {
             } else {
                 console.error(result.message || "An error occurred. Please try again.");
             }
-        } else {
-            console.error("Please enter a queue number.");
         }
     };
 
@@ -83,15 +81,21 @@ const VerifyQueueForm = ({ onNext }) => {
                 <button
                     onClick={handleSubmit}
                     className="flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded text-sm sm:text-base font-medium transition-colors duration-300"
-                    disabled={loading}
+                    disabled={loading || !queueNumber.trim()}
                     style={{
                         backgroundColor: "var(--text-color)",
                         color: "var(--bg-color)",
+                        opacity: loading || !queueNumber.trim() ? 0.6 : 1,
+                        cursor: loading || !queueNumber.trim() ? "not-allowed" : "pointer",
                     }}
                 >
-                    {loading ? (language === "en" ? "Verifying..." : "Biniberopeka...") : (language === "en"
+                    {loading
+                        ? language === "en"
+                            ? "Verifying..."
+                            : "Biniberopeka..."
+                        : language === "en"
                         ? "Verify Queue Number"
-                        : "Beripikahin ang Numero ng Pila")}
+                        : "Beripikahin ang Numero ng Pila"}
                 </button>
             </div>
         </div>

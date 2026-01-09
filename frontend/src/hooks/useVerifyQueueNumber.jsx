@@ -6,13 +6,14 @@ const useVerifyQueueNumber = (queueNumber) => {
     const [hasError, setHasError] = useState(null);
 
     const handleVerification = async () => {
-        console.log("Verifying queue number:", queueNumber);
-
+        // console.log(queueNumber);
         try {
             setLoading(true);
             setHasError(null);
+
             const response = await api.post("/client/verify-queue", { queueNumber });
-            console.log(response.data);
+            console.table(response.data.ticket);
+
         } catch (error) {
             console.error("Error verifying queue number:", error);
             setHasError(error.response?.data?.message || "An error occurred.");

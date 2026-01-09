@@ -255,6 +255,46 @@ class ClientController {
         }
     }
 
+    async verifyQueueNumber(req, res) {
+        try {
+            const { queueNumber } = req.body;
+
+            if (!queueNumber) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Queue number is required."
+                });
+            }
+
+            const ticket = await QueueTicket.findOne({ queueNumber });
+
+            if (!ticket) {
+                return res.status(404).json({
+                    success: false,
+                    valid: false,
+                    message: "Invalid queue number."
+                });
+            }
+
+            if (ticket.status === "EXPIRED") {
+                return res.status(400).json({
+                    success: false,
+                    valid: false,
+                    message: "Queue number has expired."
+                });
+            }
+
+            return res.status(200).json({
+                success: true,
+                valid: true,
+                ticket
+            });
+
+        } catch (err) {
+            console.error("Backend error:", err);
+            res.status(500).json({ message: "Server error" });
+        }
+    }
 }
 
 module.exports = new ClientController();

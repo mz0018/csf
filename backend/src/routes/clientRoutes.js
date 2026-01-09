@@ -11,6 +11,7 @@ router.post('/submit', (req, res) => ClientController.saveFeedback(req, res));
 router.post('/signin', loginLimiter, (req, res) => ClientController.verifyClientAdmin(req, res));
 router.post('/logout', (req, res) => ClientController.logout(req, res));
 router.post('/queue/generate/:id', protect, adminQueueLimiter, ClientController.generateQueueNumber);
+router.post('/verify-queue', (req, res) => ClientController.verifyQueueNumber(req, res));
 
 router.get('/me', protect, (req, res) => ClientController.getCurrentUser(req, res));
 router.get('/getqueue/:id', protect, ClientController.getAllQueue);
