@@ -4,24 +4,31 @@ import useFormSubmission from "../hooks/useFormSubmission";
 
 const Reminder = lazy(() => import("./Reminder"));
 const SelectOffice = lazy(() => import("../forms/SelectOffice"));
+const VerifyQueueForm = lazy(() => import("../forms/VerifyQueueForm"));
 const TypesOfServices = lazy(() => import("../forms/TypesOfServices"));
 const DemographicForm = lazy(() => import("../forms/DemographicForm"));
 const RespondentProfile = lazy(() => import("../forms/RespondentProfile"));
 const ServiceRatingForm = lazy(() => import("../forms/ServiceRatingForm"));
-const OtherSuggestions = lazy(() => import("../forms/OtherSuggestions")); // NEW
+const OtherSuggestions = lazy(() => import("../forms/OtherSuggestions"));
 
 const Main = () => {
   const formHook = useFormSubmission();
-
   const [showRespondent, setShowRespondent] = useState(false);
   const [showDemographic, setShowDemographic] = useState(false);
   const [showServiceRating, setShowServiceRating] = useState(false);
-  const [showOtherSuggestions, setShowOtherSuggestions] = useState(false); // NEW
+  const [showOtherSuggestions, setShowOtherSuggestions] = useState(false);
 
   const [showReminder, setShowReminder] = useState(true);
+  const [showVerifyQueueForm, setShowVerifyQueueForm] = useState(false);
 
   const dismissReminder = () => {
     setShowReminder(false);
+    setShowVerifyQueueForm(true);
+  };
+
+  const handleVerifyQueue = (queueNumber) => {
+    // TODO: Add verification logic here, e.g., API call to verify queue
+    setShowVerifyQueueForm(false);
   };
 
   // SELECT OFFICE -> RESPONDENT PROFILE
@@ -72,6 +79,7 @@ const Main = () => {
 
   const resetFlow = () => {
     setShowReminder(true);
+    setShowVerifyQueueForm(false);
     setShowRespondent(false);
     setShowDemographic(false);
     setShowServiceRating(false);
@@ -116,10 +124,16 @@ const Main = () => {
           </Suspense>
         )}
 
+        {showVerifyQueueForm && (
+          <Suspense fallback={<FormLoader />}>
+            <VerifyQueueForm onNext={handleVerifyQueue} />
+          </Suspense>
+        )}
+
         {!showReminder && (
           <>
             {/* SELECT OFFICE */}
-            {!formHook.selectedOffice && !showRespondent && (
+            {!showVerifyQueueForm && !formHook.selectedOffice && !showRespondent && (
               <Suspense fallback={<FormLoader />}>
                 <SelectOffice setSelectedOffice={handleSelectOffice} />
               </Suspense>
