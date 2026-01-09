@@ -10,7 +10,7 @@ const VerifyQueueForm = ({ onNext }) => {
 
     const handleSubmit = async () => {
         if (queueNumber.trim()) {
-            const result = handleVerification();
+            const result = await handleVerification();
 
             if (result.valid) {
                 onNext(queueNumber);

@@ -13,7 +13,7 @@ const useVerifyQueueNumber = (queueNumber) => {
 
             const response = await api.post("/client/verify-queue", { queueNumber });
             console.table(response.data.ticket);
-
+            return response.data;
         } catch (error) {
             console.error("Error verifying queue number:", error);
             setHasError(error.response?.data?.message || "An error occurred.");
