@@ -26,8 +26,9 @@ const Main = () => {
   };
 
   //VERIFY QUEUE FORM
-  const handleVerifyQueue = (officeId) => {
+  const handleVerifyQueue = (officeId, queueNumber) => {
     formHook.updateOffice(officeId);
+    formHook.updateQueueNumber(queueNumber);
     setShowVerifyQueueForm(false);
     setShowRespondent(true);
   };

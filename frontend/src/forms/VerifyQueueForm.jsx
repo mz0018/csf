@@ -13,7 +13,7 @@ const VerifyQueueForm = ({ onNext }) => {
             const result = await handleVerification();
 
             if (result.valid) {
-                onNext(result.ticket.officeId);
+                onNext(result.ticket.officeId, queueNumber);
             } else {
                 console.error(result.message || "An error occurred. Please try again.");
             }

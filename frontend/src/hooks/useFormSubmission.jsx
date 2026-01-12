@@ -10,6 +10,7 @@ const useFormSubmission = () => {
   const [addressDetails, setAddressDetails] = useState({});
   const [serviceRatings, setServiceRatings] = useState({});
   const [respondent, setRespondent] = useState({ clientName: "", clientPhone: "" });
+  const [queueNumber, setQueueNumber] = useState("");
   const [otherSuggestions, setOtherSuggestions] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState({});
@@ -32,6 +33,10 @@ const useFormSubmission = () => {
     setRespondent((prev) => ({ ...prev, ...respondentData }));
   };
 
+  const updateQueueNumber = (number) => {
+    setQueueNumber(number);
+  };
+
   const updateRatings = (ratings) => {
     setServiceRatings(ratings);
   };
@@ -48,6 +53,7 @@ const useFormSubmission = () => {
     setAddressDetails({});
     setServiceRatings({});
     setRespondent({ clientName: "", clientPhone: "" });
+    setQueueNumber("");
     setOtherSuggestions("");
     setHasError({});
     setIsLoading(false);
@@ -75,6 +81,7 @@ const useFormSubmission = () => {
       },
       ratings: serviceRatings,
       respondent,
+      queueNumber,
       otherSuggestions,
       submittedAt: new Date().toISOString(),
     };
@@ -164,6 +171,7 @@ const useFormSubmission = () => {
     updateDemographics,
     updateRatings,
     updateRespondent,
+    updateQueueNumber,
     updateOtherSuggestions,
     submitForm,
     resetForm,

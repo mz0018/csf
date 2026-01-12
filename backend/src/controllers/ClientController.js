@@ -18,6 +18,7 @@ class ClientController {
                     name: feedbackData.respondent?.clientName || "N/A",
                     phone: feedbackData.respondent?.clientPhone || "N/A"
                 },
+                queueNumber: feedbackData.queueNumber || "N/A",
                 selectedOffice: feedbackData.selectedOffice || null,
                 services: {
                     selected: feedbackData.services?.selected?.map(s => ({ id: s.id, name: s.name })) || [],
