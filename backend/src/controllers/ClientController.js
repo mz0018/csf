@@ -1,5 +1,6 @@
 const OfficeAdmin = require("../models/officeAdmins/OfficeAdminModel");
 const Offices = require("../models/offices/OfficesSchema");
+const Feedback = require("../models/feedbacks/FeedbackSchema");
 const QueueTicket = require("../models/queue/QueueTicket");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
@@ -41,6 +42,14 @@ class ClientController {
             };
 
             console.log(feedbackRecord);
+
+            const newFeedback = new Feedback(feedbackRecord);
+            await newFeedback.save();
+
+            await QueueTicket.findOneAndUpdate(
+                { queueNumber: feedbackData.queueNumber },
+                { status: "COMPLETED" }
+            );
 
             res.status(200).json({ 
                 success: true, 

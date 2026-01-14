@@ -6,7 +6,7 @@ const queueTicketSchema = new mongoose.Schema(
     queueNumber: String,
     status: {
       type: String,
-      enum: ["WAITING", "SERVING", "COMPLETED", "EXPIRED"],
+      enum: ["WAITING", "COMPLETED", "EXPIRED"],
       default: "WAITING",
     },
     expiresAt: Date,

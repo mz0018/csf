@@ -52,17 +52,34 @@ const AdminQueueTable = () => {
   const handleCopy = (queueNumber) => {
     if (lastCopiedRef.current === queueNumber) return;
 
-    navigator.clipboard.writeText(queueNumber)
-      .then(() => {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(queueNumber)
+        .then(() => {
+          notyf.success(`${queueNumber} copied to clipboard!`);
+          lastCopiedRef.current = queueNumber;
+
+          setTimeout(() => { lastCopiedRef.current = null; }, 3000);
+        })
+        .catch((err) => {
+          console.error('Failed to copy: ', err);
+          notyf.error("Failed to copy!");
+        });
+    } else {
+      const textArea = document.createElement('textarea');
+      textArea.value = queueNumber;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
         notyf.success(`${queueNumber} copied to clipboard!`);
         lastCopiedRef.current = queueNumber;
-
         setTimeout(() => { lastCopiedRef.current = null; }, 3000);
-      })
-      .catch((err) => {
-        console.error('Failed to copy: ', err);
+      } catch (err) {
+        console.error('Fallback copy failed: ', err);
         notyf.error("Failed to copy!");
-      });
+      }
+      document.body.removeChild(textArea);
+    }
   };
 
   return (
@@ -155,7 +172,7 @@ const AdminQueueTable = () => {
                       })}
                     </td>
                     <td className="border-b border-gray-200 px-6 py-6">
-                      {q.status.toLowerCase() === "expired"
+                      {q.status.toLowerCase() === "expired" || q.status.toLowerCase() === "completed"
                         ? "-- : -- : --"
                         : new Date(q.expiresAt).toLocaleTimeString()}
                     </td>
