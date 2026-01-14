@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const protect = (req, res, next) => {
     let token = req.cookies.access_token;
 
-    // Also check for token in Authorization header
     if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
         token = req.headers.authorization.split(' ')[1];
     }

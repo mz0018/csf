@@ -120,7 +120,7 @@ class ClientController {
             }).status(200).json({
                 success: true,
                 message: "Login successfull",
-                token: token, // Add token to response
+                token: token,
                 data: {
                     _id: officeAdmin._id,
                     username: officeAdmin.username,
@@ -177,7 +177,7 @@ class ClientController {
                 secure: process.env.NODE_ENV === "production",
             }).status(200).json({ success: true, message: "Logged out "});
         } catch (err) {
-            console.error("Backend error: ", error);
+            console.error("Backend error: ", err);
             res.status(500).json({
                 message: "Server error",
             })
@@ -234,7 +234,7 @@ class ClientController {
 
     async getAllQueue(req, res) {
         try {
-            const { id } = req.params;
+            // const { id } = req.params;
 
             const admin = await OfficeAdmin.findById(req.user.id);
             if (!admin) return res.status(404).json({ message: "Admin not found" });
@@ -288,11 +288,11 @@ class ClientController {
                 });
             }
 
-            if (ticket.status === "EXPIRED") {
+            if (ticket.status === "EXPIRED" || ticket.status === "COMPLETED") {
                 return res.status(400).json({
                     success: false,
                     valid: false,
-                    message: "Queue number has expired."
+                    message: "Invalid queue number."
                 });
             }
 
