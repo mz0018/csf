@@ -4,7 +4,7 @@ const Feedback = require("../models/feedbacks/FeedbackSchema");
 const QueueTicket = require("../models/queue/QueueTicket");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
-const { notifyNewQueue } = require("../socket");
+const { notifyNewQueue, notifyStatusUpdate } = require("../socket");
 
 class ClientController {
 
@@ -46,10 +46,13 @@ class ClientController {
             const newFeedback = new Feedback(feedbackRecord);
             await newFeedback.save();
 
-            await QueueTicket.findOneAndUpdate(
+            const updatedTicket = await QueueTicket.findOneAndUpdate(
                 { queueNumber: feedbackData.queueNumber },
-                { status: "COMPLETED" }
+                { status: "COMPLETED" },
+                { new: true }
             );
+
+            notifyStatusUpdate(updatedTicket);
 
             res.status(200).json({ 
                 success: true, 

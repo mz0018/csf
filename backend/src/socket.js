@@ -35,4 +35,14 @@ function notifyNewQueue(queueTicket) {
   }
 }
 
-module.exports = { initSocket, notifyNewQueue };
+function notifyStatusUpdate(queueTicket) {
+  if (io && queueTicket?.officeId) {
+    const roomName = `office-${queueTicket.officeId}`;
+    io.to(roomName).emit("statusUpdate", {
+      queueNumber: queueTicket.queueNumber,
+      status: queueTicket.status
+    });
+  }
+}
+
+module.exports = { initSocket, notifyNewQueue, notifyStatusUpdate };

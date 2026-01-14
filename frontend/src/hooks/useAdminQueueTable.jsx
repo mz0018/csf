@@ -55,6 +55,14 @@ const useAdminQueueTable = (user) => {
       setList((prev) => [ticket, ...prev].slice(0, LIMIT));
     });
 
+    socket.on("statusUpdate", ({ queueNumber, status }) => {
+      setList((prev) =>
+        prev.map((ticket) =>
+          ticket.queueNumber === queueNumber ? { ...ticket, status } : ticket
+        )
+      );
+    });
+
     return () => {
       disconnectSocket();
     };
