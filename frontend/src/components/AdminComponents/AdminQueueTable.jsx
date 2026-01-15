@@ -8,6 +8,8 @@ import { Tooltip } from "react-tooltip";
 import { offices } from "../../mocks/Offices";
 import "notyf/notyf.min.css";
 import "react-tooltip/dist/react-tooltip.css";
+import AdminDailyQueueStat from "./AdminDailyQueueStat";
+import ITQueueTable from "../ITComponents/ITQueueTable";
 import BtnGenerateQueueFallback from "../../fallbacks/BtnGenerateQueueFallback";
 import AdminQueueEmptyTableFallback from "../../fallbacks/AdminQueueEmptyTableFallback";
 
@@ -20,6 +22,7 @@ const AdminQueueTable = () => {
 
   const office = offices.find((office) => office.id === user.officeId);
   const officeName = office ? office.name : "Unknown Office";
+  const officeId = office ? office.id : null;
 
   const notyf = new Notyf({
     position: { x: "right", y: "top" },
@@ -84,102 +87,113 @@ const AdminQueueTable = () => {
 
   return (
     <div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0 sm:space-x-2">
-        <div className="flex items-center space-x-2">
-          <div className={`w-3 h-3 ${isOnline ? "bg-green-500" : "bg-red-500"} rounded-full animate-pulse`}></div>
-        </div>
-        <Suspense fallback={<BtnGenerateQueueFallback />}>
-          {isLargeScreen ? (
-            <BtnGenerateQueueNum />
-          ) : (
-            <p className="flex items-center gap-2 text-sm text-amber-800 bg-amber-100 border border-amber-300 rounded-md px-4 py-2 italic">
-              <svg
-                className="w-5 h-5 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v2m0 4h.01M4.93 19.07a10 10 0 1114.14 0l-7.07-7.07-7.07 7.07z"
-                />
-              </svg>
-              Queue generation is only available on larger screens. Please use a desktop.
-            </p>
-          )}
-        </Suspense>
-      </div>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4">
+      {/* <div className="flex items-center gap-2">
+        <div
+          className={`w-3 h-3 rounded-full animate-pulse ${
+            isOnline ? "bg-green-500" : "bg-red-500"
+          }`}
+        ></div>
+      </div> */}
+
+      <AdminDailyQueueStat />
+
+      <Suspense fallback={<BtnGenerateQueueFallback />}>
+        {isLargeScreen ? (
+          officeId !== 20 && <BtnGenerateQueueNum />
+        ) : (
+          <p className="flex sm:hidden items-center gap-2 text-sm text-amber-800 bg-amber-100 border border-amber-300 rounded-md px-4 py-2 italic w-full">
+            <svg
+              className="w-5 h-5 flex-shrink-0"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v2m0 4h.01M4.93 19.07a10 10 0 1114.14 0l-7.07-7.07-7.07 7.07z"
+              />
+            </svg>
+            Queue generation is only available on larger screens. Please use a desktop.
+          </p>
+        )}
+      </Suspense>
+    </div>
 
       {list.length === 0 ? (
         <AdminQueueEmptyTableFallback />
       ) : (
         <>
           <div className="bg-[var(--table-color)] hidden sm:block overflow-x-auto mt-4 text-left">
-            <table className="table-auto w-full">
-              <thead>
-                <tr className="uppercase tracking-wider text-[var(--heading-color)]">
-                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Queue Number</th>
-                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Status</th>
-                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Date Created</th>
-                  <th className="border-b border-gray-200 px-6 py-6" scope="col">Expires At</th>
-                </tr>
-              </thead>
-              <tbody>
-                {list.map((q) => (
-                  <tr
-                    key={q._id}
-                    className="text-[var(--text-color)] hover:bg-[var(--hover-color)] transition-colors"
-                  >
-                    <td className="border-b border-gray-200 px-6 py-6">
-                      <div className="flex items-center gap-2 text-sm">
-                        {q.queueNumber}
-                        {q.status.toLowerCase() !== "expired" && (
-                          <>
-                            <button
-                              type="button"
-                              id={`copy-${q.queueNumber}`}
-                              onClick={() => handleCopy(q.queueNumber)}
-                              aria-label={`Copy queue number ${q.queueNumber}`}
-                              className="p-1 hover:opacity-80"
-                            >
-                              <Copy
-                                className="w-4 h-4"
-                                aria-hidden="true"
-                                focusable="false"
-                              />
-                            </button>
-
-                            <Tooltip
-                              anchorId={`copy-${q.queueNumber}`}
-                              content="Copy to clipboard"
-                            />
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    <td className="border-b border-gray-200 px-6 py-6">
-                      {q.status.charAt(0).toUpperCase() + q.status.slice(1).toLowerCase()}
-                    </td>
-                    <td className="border-b border-gray-200 px-6 py-6">
-                      {new Date(q.createdAt).toLocaleDateString("en-US", {
-                        weekday: "short",
-                        year: "numeric",
-                        month: "short",
-                        day: "numeric",
-                      })}
-                    </td>
-                    <td className="border-b border-gray-200 px-6 py-6">
-                      {q.status.toLowerCase() === "expired" || q.status.toLowerCase() === "completed"
-                        ? "-- : -- : --"
-                        : new Date(q.expiresAt).toLocaleTimeString()}
-                    </td>
+            {officeId !== 20 ? (
+              <table className="table-auto w-full">
+                <thead>
+                  <tr className="uppercase tracking-wider text-[var(--heading-color)]">
+                    <th className="border-b border-gray-200 px-6 py-6" scope="col">Queue Number</th>
+                    <th className="border-b border-gray-200 px-6 py-6" scope="col">Status</th>
+                    <th className="border-b border-gray-200 px-6 py-6" scope="col">Date Created</th>
+                    <th className="border-b border-gray-200 px-6 py-6" scope="col">Expires At</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {list.map((q) => (
+                    <tr
+                      key={q._id}
+                      className="text-[var(--text-color)] hover:bg-[var(--hover-color)] transition-colors"
+                    >
+                      <td className="border-b border-gray-200 px-6 py-6">
+                        <div className="flex items-center gap-2 text-sm">
+                          {q.queueNumber}
+                          {q.status.toLowerCase() !== "expired" && (
+                            <>
+                              <button
+                                type="button"
+                                id={`copy-${q.queueNumber}`}
+                                onClick={() => handleCopy(q.queueNumber)}
+                                aria-label={`Copy queue number ${q.queueNumber}`}
+                                className="p-1 hover:opacity-80"
+                              >
+                                <Copy
+                                  className="w-4 h-4"
+                                  aria-hidden="true"
+                                  focusable="false"
+                                />
+                              </button>
+
+                              <Tooltip
+                                anchorId={`copy-${q.queueNumber}`}
+                                content="Copy to clipboard"
+                              />
+                            </>
+                          )}
+                        </div>
+                      </td>
+                      <td className="border-b border-gray-200 px-6 py-6">
+                        {q.status.charAt(0).toUpperCase() + q.status.slice(1).toLowerCase()}
+                      </td>
+                      <td className="border-b border-gray-200 px-6 py-6">
+                        {new Date(q.createdAt).toLocaleDateString("en-US", {
+                          weekday: "short",
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </td>
+                      <td className="border-b border-gray-200 px-6 py-6">
+                        {q.status.toLowerCase() === "expired" || q.status.toLowerCase() === "completed"
+                          ? "-- : -- : --"
+                          : new Date(q.expiresAt).toLocaleTimeString()}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <ITQueueTable />
+            )}
           </div>
 
           {/* Mobile screen card part */}
