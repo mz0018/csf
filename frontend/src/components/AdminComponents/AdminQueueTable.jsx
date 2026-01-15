@@ -10,6 +10,7 @@ import "notyf/notyf.min.css";
 import "react-tooltip/dist/react-tooltip.css";
 import AdminDailyQueueStat from "./AdminDailyQueueStat";
 import ITQueueTable from "../ITComponents/ITQueueTable";
+import ITQueueMobileTable from "../ITComponents/ITQueueMobileTable";
 import BtnGenerateQueueFallback from "../../fallbacks/BtnGenerateQueueFallback";
 import AdminQueueEmptyTableFallback from "../../fallbacks/AdminQueueEmptyTableFallback";
 
@@ -197,79 +198,46 @@ const AdminQueueTable = () => {
           </div>
 
           {/* Mobile screen card part */}
-          <div className="sm:hidden mt-4 space-y-3">
-            {list.map((q, index) => (
-              <div
-                key={q._id}
-                className="flex rounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
-              >
-                <div className="w-1 bg-[var(--button-color)]" />
+          {officeId === 20 ? (
+            <ITQueueMobileTable data={list} />
+          ) : (
+            <div className="sm:hidden mt-4 space-y-3">
+              {list.map((q) => (
+                <div
+                  key={q._id}
+                  className="flex rounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
+                >
+                  <div className="w-1 bg-[var(--button-color)]" />
 
-                <div className="flex-1 p-3">
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs uppercase text-[var(--text-color)]">
-                      Queue
-                    </span>
+                  <div className="flex-1 p-3">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs uppercase text-[var(--text-color)]">
+                        Queue
+                      </span>
 
-                    <span className="text-xs font-light tracking-wider">
-                      {q.status}
-                    </span>
-                  </div>
+                      <span className="text-xs font-light tracking-wider">
+                        {q.status}
+                      </span>
+                    </div>
 
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="font-semibold text-xl">
-                      {q.queueNumber}
-                    </span>
+                    <div className="mt-1 flex items-center gap-2">
+                      <span className="font-semibold text-xl">
+                        {q.queueNumber}
+                      </span>
+                    </div>
 
-                    {q.status.toLowerCase() !== "expired" && (
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(q.queueNumber)}
-                        aria-label={`Copy queue number ${q.queueNumber}`}
-                        className="p-1 hover:opacity-80"
-                      >
-                        <Copy
-                          className="w-3 h-3 text-[var(--text-color)]"
-                          aria-hidden="true"
-                          focusable="false"
-                        />
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2 flex items-center gap-1">
-                    <MapPin
-                      className="w-4 h-4 text-[var(--button-color)] shrink-0"
-                      strokeWidth={2.5}
-                    />
-                    <span>{officeName}</span>
-                  </div>
-
-                  <div className="mt-3 text-xs flex gap-2 uppercase text-[var(--text-color)]">
-                    <span>
+                    <div className="mt-3 text-xs uppercase text-[var(--text-color)]">
                       {new Date(q.createdAt).toLocaleDateString("en-US", {
                         day: "2-digit",
                         month: "short",
                         year: "numeric",
                       })}
-                    </span>
-
-                    <span>|</span>
-
-                    <span>
-                      Expires at:&nbsp;
-                      {q.status.toLowerCase() === "expired"
-                        ? "-- : --"
-                        : new Date(q.expiresAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        })}
-                    </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </>
       )}
 
