@@ -1,29 +1,17 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import useITQueue from "../../hooks/useITQueue";
 
-const ITQueueMobileTable = ({ data }) => {
-    const [queueData, setQueueData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const ITQueueMobileTable = () => {
+  const { queueData, loading, error } = useITQueue();
 
-    useEffect(() => {
-        const fetchQueueData = async () => {
-        try {
-            const response = await axios.get(
-            `${import.meta.env.VITE_IP_NI_SIR_DAVE}`
-            );
-            setQueueData(response.data);
-        } catch (error) {
-            console.error("Error fetching queue data:", error);
-        } finally {
-            setLoading(false);
-        }
-        };
+  if (error) return <p>Error</p>;
 
-        fetchQueueData();
-    }, []);
-
-    if (loading) return <p>Loading...</p>;
-
+  if (queueData.length === 0) {
+    return (
+      <div className="sm:hidden mt-4 text-center text-sm text-[var(--text-color)]">
+        No logs found
+      </div>
+    );
+  }
 
   return (
     <div className="sm:hidden mt-4 space-y-3">
@@ -51,12 +39,20 @@ const ITQueueMobileTable = ({ data }) => {
               </span>
             </div>
 
-            <div className="mt-2 text-xs uppercase text-[var(--text-color)]">
+            <div className="mt-1 text-xs uppercase text-[var(--text-color)]">
               Client
             </div>
 
             <div className="text-sm font-medium capitalize">
               {item.client_name}
+            </div>
+
+            <div className="mt-3 text-xs uppercase text-[var(--text-color)]">
+              {new Date(item.created_at).toLocaleDateString("en-US", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
             </div>
           </div>
         </div>

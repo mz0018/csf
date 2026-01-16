@@ -8,7 +8,6 @@ import { Tooltip } from "react-tooltip";
 import { offices } from "../../mocks/Offices";
 import "notyf/notyf.min.css";
 import "react-tooltip/dist/react-tooltip.css";
-import AdminDailyQueueStat from "./AdminDailyQueueStat";
 import ITQueueTable from "../ITComponents/ITQueueTable";
 import ITQueueMobileTable from "../ITComponents/ITQueueMobileTable";
 import BtnGenerateQueueFallback from "../../fallbacks/BtnGenerateQueueFallback";
@@ -96,8 +95,6 @@ const AdminQueueTable = () => {
           }`}
         ></div>
       </div> */}
-
-      <AdminDailyQueueStat />
 
       <Suspense fallback={<BtnGenerateQueueFallback />}>
         {isLargeScreen ? (
