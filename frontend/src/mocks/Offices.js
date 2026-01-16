@@ -28,7 +28,62 @@ import {
 import { FaPills, FaSmile, FaSyringe as FaInjection } from "react-icons/fa"; 
 
 export const offices = [
-  { id: 1, name: "Municipal Mayor's Office (MMO)", services: [], icon: FaLandmark },
+  { 
+    id: 1,
+    name: "Municipal Mayor's Office (MMO)",
+    services: [
+      {
+        id: 101,
+        name: {
+          en: "Request for Mayor’s Clearance (Work Employment / Immersion, Fidelity Bond Renewal)",
+          tl: "Paghiling para sa Mayor’s Clearance (Trabaho / Immersion, Pag-renew ng Fidelity Bond)"
+        }
+      },
+      {
+        id: 102,
+        name: {
+          en: "Request for Financial and Material Assistance",
+          tl: "Paghiling para sa Tulong Pinansyal at Kagamitang Materyal"
+        }
+      },
+      {
+        id: 103,
+        name: {
+          en: "Request for Marriage Schedule",
+          tl: "Paghiling para sa Iskedyul ng Kasal"
+        }
+      },
+      {
+        id: 104,
+        name: {
+          en: "Request for Venue (TDCC, Pasalubong Center)",
+          tl: "Paghiling para sa Lugar (TDCC, Pasalubong Center)"
+        }
+      },
+      {
+        id: 105,
+        name: {
+          en: "Request for Permit to Construct Tomb",
+          tl: "Paghiling para sa Permit sa Pagtatayo ng Nitso"
+        }
+      },
+      {
+        id: 106,
+        name: {
+          en: "Request for Certificate of Unemployment",
+          tl: "Paghiling para sa Sertipiko ng Kawalan ng Trabaho"
+        }
+      },
+      {
+        id: 107,
+        name: {
+          en: "Other Service (please specify)",
+          tl: "Iba pang Serbisyo (paki-tukoy)"
+        }
+      }
+    ],
+    icon: FaLandmark
+  },
   { id: 2, name: "Municipal Social Welfare and Development Office (MSWDO)", services: [], icon: FaUsers },
   { id: 3, name: "Municipal Civil Registry Office (MCRO)", services: [], icon: FaFileAlt },
   { id: 4, name: "Municipal Assessor's Office (MAO)", services: [], icon: FaCalculator },
