@@ -95,7 +95,103 @@ export const offices = [
   { id: 10, name: "Municipal Budget Office (MBO)", services: [], icon: FaRegChartBar },
   { id: 11, name: "Municipal Planning and Development Office (MPDO)", services: [], icon: FaMapMarkedAlt },
   { id: 12, name: "Municipal Agriculture Office (MAGRO)", services: [], icon: FaSeedling },
-  { id: 13, name: "Municipal Health Office (MHO)", services: [], icon: FaHospital },
+  { 
+    id: 13,
+    name: "Municipal Health Office (MHO)",
+    services: [
+      {
+        id: 1301,
+        name: { en: "Medical Consultation", tl: "Medikal na Konsultasyon" }
+      },
+      {
+        id: 1302,
+        name: { en: "Laboratory Services", tl: "Mga Serbisyong Laboratoryo" }
+      },
+      {
+        id: 1303,
+        name: { en: "Pharmacy Services", tl: "Mga Serbisyo sa Botika" }
+      },
+      {
+        id: 1304,
+        name: { en: "Dental Services", tl: "Mga Serbisyong Dental" }
+      },
+      {
+        id: 1305,
+        name: { en: "Request for Medical Certificate", tl: "Paghiling ng Medical Certificate" }
+      },
+      {
+        id: 1306,
+        name: { 
+          en: "Issuance of Sanitary Permit and Health Card", 
+          tl: "Pag-isyu ng Sanitary Permit at Health Card" 
+        }
+      },
+      {
+        id: 1307,
+        name: { 
+          en: "Issuance of Exhumation and Transfer Permit", 
+          tl: "Pag-isyu ng Permit sa Exhumation at Paglilipat" 
+        }
+      },
+      {
+        id: 1308,
+        name: { 
+          en: "Issuance of Death Certificate", 
+          tl: "Pag-isyu ng Death Certificate" 
+        }
+      },
+      {
+        id: 1309,
+        name: { 
+          en: "Management of Animal Bite", 
+          tl: "Pangangasiwa sa Kagat ng Hayop" 
+        }
+      },
+      {
+        id: 1310,
+        name: { 
+          en: "Tuberculosis Control Services", 
+          tl: "Mga Serbisyo sa Pagkontrol ng Tuberculosis" 
+        }
+      },
+      {
+        id: 1311,
+        name: { 
+          en: "Nutrition Services", 
+          tl: "Mga Serbisyo sa Nutrisyon" 
+        }
+      },
+      {
+        id: 1312,
+        name: { 
+          en: "Childbirth / Delivery Services (BEMONC Lying-in)", 
+          tl: "Mga Serbisyo sa Panganganak (BEMONC Lying-in)" 
+        }
+      },
+      {
+        id: 1313,
+        name: { 
+          en: "Medico-Legal Services", 
+          tl: "Mga Serbisyong Medico-Legal" 
+        }
+      },
+      {
+        id: 1314,
+        name: { 
+          en: "Veterinary Services", 
+          tl: "Mga Serbisyong Beterinaryo" 
+        }
+      },
+      {
+        id: 1315,
+        name: { 
+          en: "Other Services (please specify)", 
+          tl: "Iba pang Serbisyo (paki-tukoy)" 
+        }
+      }
+    ],
+    icon: FaHospital
+  },
   { id: 14, name: "Municipal General Service Office (MGSO)", services: [], icon: FaBuilding },
   { id: 15, name: "Municipal Disaster Risk Reduction Management Office (MDRRMO)", services: [], icon: FaExclamationTriangle },
   { id: 16, name: "SEEDO-Market", services: [], icon: FaStore },
