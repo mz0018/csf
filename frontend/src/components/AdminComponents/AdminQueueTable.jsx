@@ -45,7 +45,7 @@ const AdminQueueTable = () => {
     handleResize();
 
     return () => window.removeEventListener('resize', handleResize);
-  }, []); 
+  }, []);
 
   const lastCopiedRef = useRef(null);
 
@@ -88,7 +88,7 @@ const AdminQueueTable = () => {
   return (
     <div>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4">
-      {/* <div className="flex items-center gap-2">
+        {/* <div className="flex items-center gap-2">
         <div
           className={`w-3 h-3 rounded-full animate-pulse ${
             isOnline ? "bg-green-500" : "bg-red-500"
@@ -96,30 +96,30 @@ const AdminQueueTable = () => {
         ></div>
       </div> */}
 
-      <Suspense fallback={<BtnGenerateQueueFallback />}>
-        {isLargeScreen ? (
-          officeId !== 20 && <BtnGenerateQueueNum />
-        ) : (
-          <p className="flex sm:hidden items-center gap-2 text-sm text-amber-800 bg-amber-100 border border-amber-300 rounded-md px-4 py-2 italic w-full">
-            <svg
-              className="w-5 h-5 flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 9v2m0 4h.01M4.93 19.07a10 10 0 1114.14 0l-7.07-7.07-7.07 7.07z"
-              />
-            </svg>
-            Queue generation is only available on larger screens. Please use a desktop.
-          </p>
-        )}
-      </Suspense>
-    </div>
+        <Suspense fallback={<BtnGenerateQueueFallback />}>
+          {isLargeScreen ? (
+            officeId !== 20 && <BtnGenerateQueueNum />
+          ) : (
+            <p className="flex sm:hidden items-center gap-2 text-sm text-amber-800 bg-amber-100 border border-amber-300 rounded-md px-4 py-2 italic w-full">
+              <svg
+                className="w-5 h-5 flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={2}
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 9v2m0 4h.01M4.93 19.07a10 10 0 1114.14 0l-7.07-7.07-7.07 7.07z"
+                />
+              </svg>
+              Queue generation is only available on larger screens. Please use a desktop.
+            </p>
+          )}
+        </Suspense>
+      </div>
 
       {list.length === 0 ? (
         <AdminQueueEmptyTableFallback />
@@ -201,74 +201,74 @@ const AdminQueueTable = () => {
             <div className="sm:hidden mt-4 space-y-3">
               {list.map((q) => (
                 <div
-                key={q._id}
-                className="flex rounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
-              >
-                <div className="w-1 bg-[var(--button-color)]" />
+                  key={q._id}
+                  className="flex rounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
+                >
+                  <div className="w-1 bg-[var(--button-color)]" />
 
-                <div className="flex-1 p-3">
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs uppercase text-[var(--text-color)]">
-                      Queue
-                    </span>
+                  <div className="flex-1 p-3">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs uppercase text-[var(--text-color)]">
+                        Queue
+                      </span>
 
-                    <span className="text-xs font-light tracking-wider">
-                      {q.status}
-                    </span>
-                  </div>
+                      <span className="text-xs font-light tracking-wider">
+                        {q.status}
+                      </span>
+                    </div>
 
-                  <div className="mt-1 flex items-center gap-2">
-                    <span className="font-semibold text-xl">
-                      {q.queueNumber}
-                    </span>
+                    <div className="mt-1 flex items-center gap-2">
+                      <span className="font-semibold text-xl">
+                        {q.queueNumber}
+                      </span>
 
-                    {q.status.toLowerCase() !== "expired" && (
-                      <button
-                        type="button"
-                        onClick={() => handleCopy(q.queueNumber)}
-                        aria-label={`Copy queue number ${q.queueNumber}`}
-                        className="p-1 hover:opacity-80"
-                      >
-                        <Copy
-                          className="w-3 h-3 text-[var(--text-color)]"
-                          aria-hidden="true"
-                          focusable="false"
-                        />
-                      </button>
-                    )}
-                  </div>
+                      {q.status.toLowerCase() !== "expired" && (
+                        <button
+                          type="button"
+                          onClick={() => handleCopy(q.queueNumber)}
+                          aria-label={`Copy queue number ${q.queueNumber}`}
+                          className="p-1 hover:opacity-80"
+                        >
+                          <Copy
+                            className="w-3 h-3 text-[var(--text-color)]"
+                            aria-hidden="true"
+                            focusable="false"
+                          />
+                        </button>
+                      )}
+                    </div>
 
-                  <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2 flex items-center gap-1">
-                    <MapPin
-                      className="w-4 h-4 text-[var(--button-color)] shrink-0"
-                      strokeWidth={2.5}
-                    />
-                    <span>{officeName}</span>
-                  </div>
+                    <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2 flex items-center gap-1">
+                      <MapPin
+                        className="w-4 h-4 text-[var(--button-color)] shrink-0"
+                        strokeWidth={2.5}
+                      />
+                      <span>{officeName}</span>
+                    </div>
 
-                  <div className="mt-3 text-xs flex gap-2 uppercase text-[var(--text-color)]">
-                    <span>
-                      {new Date(q.createdAt).toLocaleDateString("en-US", {
-                        day: "2-digit",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </span>
-
-                    <span>|</span>
-
-                    <span>
-                      Expires at:&nbsp;
-                      {q.status.toLowerCase() === "expired"
-                        ? "-- : --"
-                        : new Date(q.expiresAt).toLocaleTimeString([], {
-                          hour: "2-digit",
-                          minute: "2-digit",
+                    <div className="mt-3 text-xs flex gap-2 uppercase text-[var(--text-color)]">
+                      <span>
+                        {new Date(q.createdAt).toLocaleDateString("en-US", {
+                          day: "2-digit",
+                          month: "short",
+                          year: "numeric",
                         })}
-                    </span>
+                      </span>
+
+                      <span>|</span>
+
+                      <span>
+                        Expires at:&nbsp;
+                        {q.status.toLowerCase() === "expired"
+                          ? "-- : --"
+                          : new Date(q.expiresAt).toLocaleTimeString([], {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          })}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
               ))}
             </div>
           )}
