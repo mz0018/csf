@@ -1,34 +1,34 @@
-import { 
-  FaLandmark, 
-  FaUsers, 
-  FaFileAlt, 
-  FaCalculator, 
-  FaMoneyBill, 
-  FaCoins, 
-  FaTools, 
-  FaClipboardList, 
-  FaUserTie, 
-  FaRegChartBar, 
-  FaMapMarkedAlt, 
-  FaSeedling, 
-  FaHospital, 
-  FaBuilding, 
-  FaExclamationTriangle, 
-  FaStore, 
-  FaPaw, 
-  FaUser, 
-  FaUmbrella, 
-  FaLaptop, 
-  FaFlask, 
-  FaCapsules, 
-  FaTooth,   
-  FaSyringe   
+import {
+  FaLandmark,
+  FaUsers,
+  FaFileAlt,
+  FaCalculator,
+  FaMoneyBill,
+  FaCoins,
+  FaTools,
+  FaClipboardList,
+  FaUserTie,
+  FaRegChartBar,
+  FaMapMarkedAlt,
+  FaSeedling,
+  FaHospital,
+  FaBuilding,
+  FaExclamationTriangle,
+  FaStore,
+  FaPaw,
+  FaUser,
+  FaUmbrella,
+  FaLaptop,
+  FaFlask,
+  FaCapsules,
+  FaTooth,
+  FaSyringe
 } from "react-icons/fa";
 
-import { FaPills, FaSmile, FaSyringe as FaInjection } from "react-icons/fa"; 
+import { FaPills, FaSmile, FaSyringe as FaInjection } from "react-icons/fa";
 
 export const offices = [
-  { 
+  {
     id: 1,
     name: "Municipal Mayor's Office (MMO)",
     services: [
@@ -95,7 +95,7 @@ export const offices = [
   { id: 10, name: "Municipal Budget Office (MBO)", services: [], icon: FaRegChartBar },
   { id: 11, name: "Municipal Planning and Development Office (MPDO)", services: [], icon: FaMapMarkedAlt },
   { id: 12, name: "Municipal Agriculture Office (MAGRO)", services: [], icon: FaSeedling },
-  { 
+  {
     id: 13,
     name: "Municipal Health Office (MHO)",
     services: [
@@ -121,72 +121,72 @@ export const offices = [
       },
       {
         id: 1306,
-        name: { 
-          en: "Issuance of Sanitary Permit and Health Card", 
-          tl: "Pag-isyu ng Sanitary Permit at Health Card" 
+        name: {
+          en: "Issuance of Sanitary Permit and Health Card",
+          tl: "Pag-isyu ng Sanitary Permit at Health Card"
         }
       },
       {
         id: 1307,
-        name: { 
-          en: "Issuance of Exhumation and Transfer Permit", 
-          tl: "Pag-isyu ng Permit sa Exhumation at Paglilipat" 
+        name: {
+          en: "Issuance of Exhumation and Transfer Permit",
+          tl: "Pag-isyu ng Permit sa Exhumation at Paglilipat"
         }
       },
       {
         id: 1308,
-        name: { 
-          en: "Issuance of Death Certificate", 
-          tl: "Pag-isyu ng Death Certificate" 
+        name: {
+          en: "Issuance of Death Certificate",
+          tl: "Pag-isyu ng Death Certificate"
         }
       },
       {
         id: 1309,
-        name: { 
-          en: "Management of Animal Bite", 
-          tl: "Pangangasiwa sa Kagat ng Hayop" 
+        name: {
+          en: "Management of Animal Bite",
+          tl: "Pangangasiwa sa Kagat ng Hayop"
         }
       },
       {
         id: 1310,
-        name: { 
-          en: "Tuberculosis Control Services", 
-          tl: "Mga Serbisyo sa Pagkontrol ng Tuberculosis" 
+        name: {
+          en: "Tuberculosis Control Services",
+          tl: "Mga Serbisyo sa Pagkontrol ng Tuberculosis"
         }
       },
       {
         id: 1311,
-        name: { 
-          en: "Nutrition Services", 
-          tl: "Mga Serbisyo sa Nutrisyon" 
+        name: {
+          en: "Nutrition Services",
+          tl: "Mga Serbisyo sa Nutrisyon"
         }
       },
       {
         id: 1312,
-        name: { 
-          en: "Childbirth / Delivery Services (BEMONC Lying-in)", 
-          tl: "Mga Serbisyo sa Panganganak (BEMONC Lying-in)" 
+        name: {
+          en: "Childbirth / Delivery Services (BEMONC Lying-in)",
+          tl: "Mga Serbisyo sa Panganganak (BEMONC Lying-in)"
         }
       },
       {
         id: 1313,
-        name: { 
-          en: "Medico-Legal Services", 
-          tl: "Mga Serbisyong Medico-Legal" 
+        name: {
+          en: "Medico-Legal Services",
+          tl: "Mga Serbisyong Medico-Legal"
         }
       },
       {
         id: 1314,
-        name: { 
-          en: "Veterinary Services", 
-          tl: "Mga Serbisyong Beterinaryo" 
+        name: {
+          en: "Veterinary Services",
+          tl: "Mga Serbisyong Beterinaryo"
         }
       },
       {
         id: 1315,
-        name: { 
-          en: "Other Services (please specify)", 
-          tl: "Iba pang Serbisyo (paki-tukoy)" 
+        name: {
+          en: "Other Services (please specify)",
+          tl: "Iba pang Serbisyo (paki-tukoy)"
         }
       }
     ],
@@ -198,7 +198,7 @@ export const offices = [
   { id: 17, name: "SEEDO-Slaughter", services: [], icon: FaPaw },
   { id: 18, name: "Office of the Senior Citizen's Affairs (OSCA)", services: [], icon: FaUser },
   { id: 19, name: "MMO-Tourism Section", services: [], icon: FaUmbrella },
-  { 
+  {
     id: 20,
     name: "MMO-Information and Technology Section",
     services: [
@@ -208,5 +208,5 @@ export const offices = [
       { id: 204, name: { en: "Other service (please specify)", tl: "Iba pang serbisyo (paki-tukoy)" } },
     ],
     icon: FaLaptop
- },
+  },
 ];

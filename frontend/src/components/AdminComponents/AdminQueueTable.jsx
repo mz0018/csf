@@ -12,6 +12,7 @@ import ITQueueTable from "../ITComponents/ITQueueTable";
 import ITQueueMobileTable from "../ITComponents/ITQueueMobileTable";
 import BtnGenerateQueueFallback from "../../fallbacks/BtnGenerateQueueFallback";
 import AdminQueueEmptyTableFallback from "../../fallbacks/AdminQueueEmptyTableFallback";
+import DateBaseFiltering from "../DateBaseFiltering";
 
 const BtnGenerateQueueNum = lazy(() => import('../../buttons/BtnGenerateQueueNum'));
 
@@ -95,6 +96,7 @@ const AdminQueueTable = () => {
           }`}
         ></div>
       </div> */}
+      <DateBaseFiltering officeId={officeId} />
 
         <Suspense fallback={<BtnGenerateQueueFallback />}>
           {isLargeScreen ? (

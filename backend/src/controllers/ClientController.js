@@ -307,6 +307,53 @@ class ClientController {
             res.status(500).json({ message: "Server error" });
         }
     }
+
+    async getQueueToday(req, res) {
+        try {
+            const { officeId } = req.params;
+
+            const today = new Date();
+            const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+            const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 23, 59, 59, 999);
+
+            const queuesToday = await QueueTicket.find({
+                officeId: Number(officeId),
+                createdAt: { $gte: startOfDay, $lte: endOfDay }
+            }).sort({ queueNumber: 1 });
+
+            const waiting = [];
+            const completed = [];
+            const expired = [];
+
+            const now = new Date();
+
+            queuesToday.forEach(q => {
+                if (q.status === "COMPLETED") {
+                    completed.push(q);
+                } else if (q.status === "WAITING" && q.expiresAt < now) {
+                    q.status = "EXPIRED";
+                    expired.push(q);
+                } else if (q.status === "EXPIRED") {
+                    expired.push(q);
+                } else {
+                    waiting.push(q);
+                }
+            });
+
+            console.log("Queues today grouped by status:", { waiting, completed, expired });
+
+            res.status(200).json({
+                waiting,
+                completed,
+                expired,
+                total: queuesToday.length
+            });
+
+        } catch (err) {
+            console.error("Backend error:", err);
+            res.status(500).json({ message: "Server error" });
+        }
+    }
 }
 
 module.exports = new ClientController();

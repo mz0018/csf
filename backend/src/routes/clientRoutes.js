@@ -16,5 +16,6 @@ router.post('/verify-queue', globalQueueLimiter, (req, res) => ClientController.
 
 router.get('/me', protect, (req, res) => ClientController.getCurrentUser(req, res));
 router.get('/getqueue/:id', protect, ClientController.getAllQueue);
+router.post('/getByDateToday/:officeId', ClientController.getQueueToday);
 
 module.exports = router;
