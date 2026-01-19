@@ -1,43 +1,109 @@
+import { Suspense, lazy, useState, useEffect } from "react";
 import useDateBaseFiltering from "../hooks/useDateBaseFiltering";
+import { TicketPlus } from "lucide-react";
+import { offices } from "../mocks/Offices";
+import BtnGenerateQueueFallback from "../fallbacks/BtnGenerateQueueFallback";
+const BtnGenerateQueueNum = lazy(() => import('../buttons/BtnGenerateQueueNum'));
 
 const DateBaseFiltering = ({ officeId }) => {
-    const { list, loading, hasErrors } = useDateBaseFiltering(officeId);
+  const { list, loading, hasErrors } = useDateBaseFiltering(officeId);
 
-    if (loading) return <div>Loading...</div>
-    if (hasErrors) return <div>{hasErrors}</div>
-    if (!list) return <div>No queues for today</div>
+  const [isLargeScreen, setIsLargeScreen] = useState(
+    typeof window !== "undefined" ? window.innerWidth > 1024 : false
+  );
 
-    const { waiting = [], completed = [], expired = [] } = list;
+  useEffect(() => {
+    function handleResize() {
+      setIsLargeScreen(window.innerWidth > 1024);
+    }
 
-    return (
-        <section className="space-y-4">
-            <h2 className="text-2xl font-bold tracking-wide">Queue Counts for Today</h2>
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-[var(--table-color)] p-5">
-                    <p>Total: {waiting.length + completed.length + expired.length}</p>
-                </div>
+  if (loading) return <div>Loading...</div>;
+  if (hasErrors) return <div>{hasErrors}</div>;
+  if (!list) return <div>No queues for today</div>;
 
-                <div className="bg-[var(--table-color)] p-5">
-                    <p className="font-semibold mb-2">Title</p>
+  const { waiting = [], completed = [], expired = [] } = list;
 
-                    <div className="grid grid-cols-3 text-sm font-medium text-center mb-1 space-x-3">
-                        <span>Total waiting queue</span>
-                        <span>Total expired queue</span>
-                        <span>Completed</span>
-                    </div>
+  return (
+    <section className="space-y-3">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+        <h2 className="text-xl md:text-2xl font-bold tracking-wide text-[var(--black-csf)]">
+          Daily Queue Overview
+        </h2>
 
-                    <div className="grid grid-cols-3 text-start text-3xl">
-                        <span>{waiting.length}</span>
-                        <span>{expired.length}</span>
-                        <span>{completed.length}</span>
-                    </div>
-                </div>
+        <Suspense fallback={<BtnGenerateQueueFallback />}>
+          {officeId !== 20 && isLargeScreen && <BtnGenerateQueueNum />}
+        </Suspense>
+      </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-3">
+        <div className="bg-[var(--table-color)] p-3 flex flex-col gap-1 md:col-span-1 rounded-sm">
+        <span className="font-semibold text-[var(--heading-color)] text-sm md:text-base inline-flex items-center gap-2">
+          {(() => {
+            const office = offices.find(o => o.id === officeId);
+            if (!office) return null;
+            const Icon = office.icon;
+            return <Icon className="text-[var(--button-color)] flex-shrink-0" size={22} />;
+          })()}
+          {offices.find(o => o.id === officeId)?.name || "Office"}
+        </span>
+
+        <span className="text-xs text-[var(--text-color)]">
+            {new Date().toLocaleDateString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+            })}
+        </span>
+
+        <span className="font-semibold border-r border-gray-200 text-[var(--text-color)] text-sm">
+            Total Queue Numbers
+        </span>
+
+        <span className="text-2xl md:text-3xl font-bold text-[var(--black-csf)]">
+            {waiting.length + completed.length + expired.length}
+        </span>
+        </div>
+
+        <div className="bg-[var(--table-color)] p-3 rounded-sm">
+          <p className="font-semibold mb-2 text-[var(--heading-color)] flex items-center gap-2 text-sm md:text-base">
+            <TicketPlus
+              size={22}
+              className="text-[var(--button-color)] rotate-45"
+            />
+            Today’s Queue Status
+          </p>
+
+          <div className="grid grid-cols-3 text-xs md:text-sm font-medium text-center">
+            <div className="p-1 border-r border-gray-200 text-[var(--text-color)]">
+              Total waiting queue
             </div>
+            <div className="p-1 border-r border-gray-200 text-[var(--text-color)]">
+              Completed queue
+            </div>
+            <div className="p-1 text-[var(--text-color)]">Total expired queue</div>
+          </div>
 
-        </section>
-    )
-}
+          <div className="grid grid-cols-3 text-center text-2xl md:text-3xl font-bold mt-1">
+            <div className="py-2 border-r border-gray-200 text-[var(--black-csf)]">
+              {waiting.length}
+            </div>
+            <div className="py-2 border-r border-gray-200 text-[var(--black-csf)]">
+              {completed.length}
+            </div>
+            <div className="py-2 text-[var(--border-color)] text-[var(--black-csf)]">
+              {expired.length}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default DateBaseFiltering;

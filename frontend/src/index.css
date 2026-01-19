@@ -38,7 +38,7 @@
   --bg-color: #d5deef;
   --table-color: #f0f3fa;
   --heading-color: #395886;
-  --border-color: #ff4d4d;
+  --border-color: #f85c5c;
   --border-warning-color: #f59e0b;
   --border-bg-warning-color: #78350f33;
   --text-warning-color: #ffd166;
@@ -46,6 +46,7 @@
   --sidebar-color: #111827;
   --hover-color: #96bdf730;
   --btn-hover-color: #649ef4;
+  --black-csf: #1f1f1fbe;
 }
 
 body {

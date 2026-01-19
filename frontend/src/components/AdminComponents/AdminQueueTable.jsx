@@ -1,8 +1,7 @@
-import React, { lazy, useRef, Suspense, useState, useEffect } from "react";
+import { useRef } from "react";
 import { useAuth } from "../../context/AuthContext";
 import useAdminQueueTable from "../../hooks/useAdminQueueTable";
-import AdminQueueTableFallback from "../../fallbacks/AdminQueueTableFallback";
-import { Copy, MapPin, Inbox } from "lucide-react";
+import { Copy, MapPin } from "lucide-react";
 import { Notyf } from "notyf";
 import { Tooltip } from "react-tooltip";
 import { offices } from "../../mocks/Offices";
@@ -10,12 +9,8 @@ import "notyf/notyf.min.css";
 import "react-tooltip/dist/react-tooltip.css";
 import ITQueueTable from "../ITComponents/ITQueueTable";
 import ITQueueMobileTable from "../ITComponents/ITQueueMobileTable";
-import BtnGenerateQueueFallback from "../../fallbacks/BtnGenerateQueueFallback";
 import AdminQueueEmptyTableFallback from "../../fallbacks/AdminQueueEmptyTableFallback";
 import DateBaseFiltering from "../DateBaseFiltering";
-
-const BtnGenerateQueueNum = lazy(() => import('../../buttons/BtnGenerateQueueNum'));
-
 
 const AdminQueueTable = () => {
   const { user } = useAuth();
@@ -34,23 +29,10 @@ const AdminQueueTable = () => {
     ]
   });
 
-  const [isLargeScreen, setIsLargeScreen] = useState(typeof window !== 'undefined' ? window.innerWidth > 1024 : false);
-
-  useEffect(() => {
-    function handleResize() {
-      setIsLargeScreen(window.innerWidth > 1024);
-    }
-
-    window.addEventListener('resize', handleResize);
-
-    handleResize();
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  
 
   const lastCopiedRef = useRef(null);
 
-  // if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error loading queue.</p>;
 
   const handleCopy = (queueNumber) => {
@@ -88,21 +70,8 @@ const AdminQueueTable = () => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-4">
-        {/* <div className="flex items-center gap-2">
-        <div
-          className={`w-3 h-3 rounded-full animate-pulse ${
-            isOnline ? "bg-green-500" : "bg-red-500"
-          }`}
-        ></div>
-      </div> */}
-      <DateBaseFiltering officeId={officeId} />
-
-        <Suspense fallback={<BtnGenerateQueueFallback />}>
-          {isLargeScreen && (
-            officeId !== 20 && <BtnGenerateQueueNum />
-          )}
-        </Suspense>
+      <div className="space-y-4">
+        <DateBaseFiltering officeId={officeId} />
       </div>
 
       {list.length === 0 ? (
@@ -113,7 +82,7 @@ const AdminQueueTable = () => {
             {officeId !== 20 ? (
               <table className="table-auto w-full">
                 <thead>
-                  <tr className="uppercase tracking-wider text-[var(--heading-color)]">
+                  <tr className="capitalize tracking-wider text-[var(--heading-color)]">
                     <th className="border-b border-gray-200 px-6 py-6" scope="col">Queue Number</th>
                     <th className="border-b border-gray-200 px-6 py-6" scope="col">Status</th>
                     <th className="border-b border-gray-200 px-6 py-6" scope="col">Date Created</th>
