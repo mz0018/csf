@@ -11,11 +11,20 @@ const DateBaseFiltering = ({ officeId }) => {
 
     return (
         <section>
-            <h2>Queue Counts for Today</h2>
-            <p>Waiting: {waiting.length}</p>
-            <p>Completed: {completed.length}</p>
-            <p>Expired: {expired.length}</p>
-            <p>Total: {waiting.length + completed.length + expired.length}</p>
+            <h2 className="text-2xl font-bold tracking-wide">Queue Counts for Today</h2>
+
+            <div className="grid grid-cols-2 gap-4">
+                <div className="bg-[var(--table-color)]">
+                    <p>Total: {waiting.length + completed.length + expired.length}</p>
+                </div>
+
+                <div className="bg-[var(--table-color)] grid grid-cols-3 gap-2">
+                    <div>Waiting: {waiting.length}</div>
+                    <div>Completed: {completed.length}</div>
+                    <div>Expired: {expired.length}</div>    
+                </div>
+            </div>
+
         </section>
     )
 }

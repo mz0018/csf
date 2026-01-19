@@ -99,26 +99,8 @@ const AdminQueueTable = () => {
       <DateBaseFiltering officeId={officeId} />
 
         <Suspense fallback={<BtnGenerateQueueFallback />}>
-          {isLargeScreen ? (
+          {isLargeScreen && (
             officeId !== 20 && <BtnGenerateQueueNum />
-          ) : (
-            <p className="flex sm:hidden items-center gap-2 text-sm text-amber-800 bg-amber-100 border border-amber-300 rounded-md px-4 py-2 italic w-full">
-              <svg
-                className="w-5 h-5 flex-shrink-0"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v2m0 4h.01M4.93 19.07a10 10 0 1114.14 0l-7.07-7.07-7.07 7.07z"
-                />
-              </svg>
-              Queue generation is only available on larger screens. Please use a desktop.
-            </p>
           )}
         </Suspense>
       </div>
