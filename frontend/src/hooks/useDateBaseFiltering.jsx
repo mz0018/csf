@@ -13,8 +13,8 @@ const useDateBaseFiltering = (officeId) => {
             setLoading(true);
             try {
                 const response = await api.post(`/client/getByDateToday/${officeId}`);
-                console.table(response.data);
-                setList(response.data.data);
+                console.log(response.data);
+                setList(response.data);
             } catch (err) {
                 setHasErrors(err.response?.data?.message || "Server error");
             } finally {
