@@ -1,6 +1,6 @@
 import { Suspense, lazy, useState, useEffect } from "react";
 import useDateBaseFiltering from "../hooks/useDateBaseFiltering";
-import { TicketPlus } from "lucide-react";
+import { TicketPlus, ChartColumnBig } from "lucide-react";
 import { offices } from "../mocks/Offices";
 import BtnGenerateQueueFallback from "../fallbacks/BtnGenerateQueueFallback";
 const BtnGenerateQueueNum = lazy(() => import('../buttons/BtnGenerateQueueNum'));
@@ -49,18 +49,16 @@ const DateBaseFiltering = ({ officeId }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] gap-3">
+
         <div className="bg-[var(--table-color)] p-3 flex flex-col gap-1 md:col-span-1 rounded-sm">
-          <span className="block font-semibold border-r border-gray-200 text-[var(--text-color)] text-sm mt-2">
+          <span className="font-semibold mb-2 text-[var(--heading-color)] flex items-center gap-2 text-sm md:text-base">
+            <ChartColumnBig className="text-[var(--button-color)]" />
             Total Queue Numbers
           </span>
 
-          <span className="text-2xl md:text-3xl font-bold text-[var(--black-csf)]">
-            {waiting.length + completed.length + expired.length}
-          </span>
-
-          <span className="text-xs text-[var(--text-color)]">
+          <span className="font-semibold text-xs text-[var(--text-color)]">
             Total queue numbers as of{" "}
-            <span className="font-semibold">
+            <span className="font-light">
               {new Date().toLocaleDateString("en-US", {
                 weekday: "short",
                 month: "short",
@@ -69,6 +67,11 @@ const DateBaseFiltering = ({ officeId }) => {
               })}
             </span>
           </span>
+
+          <span className="text-2xl md:text-3xl font-bold text-[var(--black-csf)] text-center">
+            {waiting.length + completed.length + expired.length}
+          </span>
+
         </div>
 
         <div className="bg-[var(--table-color)] p-3 rounded-sm">

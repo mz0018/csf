@@ -98,28 +98,28 @@ const AdminQueueTable = () => {
                       <td className="border-b border-gray-200 px-6 py-6">
                         <div className="flex items-center gap-2 text-sm">
                           {q.queueNumber}
-                          {q.status.toLowerCase() !== "expired" && (
-                            <>
-                              <button
-                                type="button"
-                                id={`copy-${q.queueNumber}`}
-                                onClick={() => handleCopy(q.queueNumber)}
-                                aria-label={`Copy queue number ${q.queueNumber}`}
-                                className="p-1 hover:opacity-80"
-                              >
-                                <Copy
-                                  className="w-4 h-4"
-                                  aria-hidden="true"
-                                  focusable="false"
-                                />
-                              </button>
-
-                              <Tooltip
-                                anchorId={`copy-${q.queueNumber}`}
-                                content="Copy to clipboard"
+                          {!["expired", "completed"].includes(q.status.toLowerCase()) && (
+                          <>
+                            <button
+                              type="button"
+                              id={`copy-${q.queueNumber}`}
+                              onClick={() => handleCopy(q.queueNumber)}
+                              aria-label={`Copy queue number ${q.queueNumber}`}
+                              className="p-1 hover:opacity-80"
+                            >
+                              <Copy
+                                className="w-4 h-4"
+                                aria-hidden="true"
+                                focusable="false"
                               />
-                            </>
-                          )}
+                            </button>
+
+                            <Tooltip
+                              anchorId={`copy-${q.queueNumber}`}
+                              content="Copy to clipboard"
+                            />
+                          </>
+                        )}
                         </div>
                       </td>
                       <td className="border-b border-gray-200 px-6 py-6">
@@ -175,20 +175,20 @@ const AdminQueueTable = () => {
                         {q.queueNumber}
                       </span>
 
-                      {q.status.toLowerCase() !== "expired" && (
-                        <button
-                          type="button"
-                          onClick={() => handleCopy(q.queueNumber)}
-                          aria-label={`Copy queue number ${q.queueNumber}`}
-                          className="p-1 hover:opacity-80"
-                        >
-                          <Copy
-                            className="w-3 h-3 text-[var(--text-color)]"
-                            aria-hidden="true"
-                            focusable="false"
-                          />
-                        </button>
-                      )}
+                      {!["expired", "completed"].includes(q.status.toLowerCase()) && (
+                      <button
+                        type="button"
+                        onClick={() => handleCopy(q.queueNumber)}
+                        aria-label={`Copy queue number ${q.queueNumber}`}
+                        className="p-1 hover:opacity-80"
+                      >
+                        <Copy
+                          className="w-3 h-3 text-[var(--text-color)]"
+                          aria-hidden="true"
+                          focusable="false"
+                        />
+                      </button>
+                    )}
                     </div>
 
                     <div className="mt-1 text-sm border-b border-[var(--text-color)] pb-2 flex items-center gap-1">
