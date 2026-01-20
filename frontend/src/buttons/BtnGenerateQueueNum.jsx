@@ -6,7 +6,7 @@ import { Notyf } from "notyf";
 import "notyf/notyf.min.css";
 import usePrintHook from "../hooks/usePrintHook";
 
-const BtnGenerateQueueNum = () => {
+const BtnGenerateQueueNum = ({ refetch }) => {
     const [queue, setQueue] = useState([]);
     const [loading, setLoading] = useState(false);
     const [rateLimited, setRateLimited] = useState(false);
@@ -44,6 +44,8 @@ const BtnGenerateQueueNum = () => {
                     response.data.queueNumber,
                     response.data.expiresAt,
                 );
+
+                refetch();
             }
 
         } catch (err) {

@@ -6,7 +6,7 @@ import BtnGenerateQueueFallback from "../fallbacks/BtnGenerateQueueFallback";
 const BtnGenerateQueueNum = lazy(() => import('../buttons/BtnGenerateQueueNum'));
 
 const DateBaseFiltering = ({ officeId }) => {
-  const { list, loading, hasErrors } = useDateBaseFiltering(officeId);
+  const { list, loading, hasErrors, refetch } = useDateBaseFiltering(officeId);
 
   const [isLargeScreen, setIsLargeScreen] = useState(
     typeof window !== "undefined" ? window.innerWidth > 1024 : false
@@ -22,7 +22,7 @@ const DateBaseFiltering = ({ officeId }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  if (loading) return <div>Loading...</div>;
+  // if (loading) return <div>Loading...</div>;
   if (hasErrors) return <div>{hasErrors}</div>;
   if (!list) return <div>No queues for today</div>;
 
@@ -44,7 +44,7 @@ const DateBaseFiltering = ({ officeId }) => {
         </h2>
 
         <Suspense fallback={<BtnGenerateQueueFallback />}>
-          {officeId !== 20 && isLargeScreen && <BtnGenerateQueueNum />}
+          {officeId !== 20 && isLargeScreen && <BtnGenerateQueueNum refetch={refetch} />}
         </Suspense>
       </div>
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import api from "../services/api";
 
 const useDateBaseFiltering = (officeId) => {
@@ -6,26 +6,26 @@ const useDateBaseFiltering = (officeId) => {
     const [loading, setLoading] = useState(false);
     const [hasErrors, setHasErrors] = useState(null);
 
-    useEffect(() => {
+    const fetchToday = useCallback(async () => {
         if (!officeId) return;
 
-        const getByDateToday = async () => {
-            setLoading(true);
-            try {
-                const response = await api.get(`/client/getByDateToday/${officeId}`);
-                console.log(response.data);
-                setList(response.data);
-            } catch (err) {
-                setHasErrors(err.response?.data?.message || "Server error");
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        getByDateToday();
+        setLoading(true);
+        try {
+            const response = await api.get(`/client/getByDateToday/${officeId}`);
+            setList(response.data);
+            setHasErrors(null);
+        } catch (err) {
+            setHasErrors(err.response?.data?.message || "Server error");
+        } finally {
+            setLoading(false);
+        }
     }, [officeId]);
 
-    return { list, loading, hasErrors }
-}
+    useEffect(() => {
+        fetchToday();
+    }, [fetchToday]);
+
+    return { list, loading, hasErrors, refetch: fetchToday };
+};
 
 export default useDateBaseFiltering;
