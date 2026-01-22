@@ -6,7 +6,7 @@ function stringToColor(str) {
   return `hsl(${hash % 360}, 70%, 50%)`;
 }
 
-const AdminAvatar = ({ name, size = 100 }) => {
+const AdminAvatar = ({ name }) => {
   const initial = name?.[0]?.toUpperCase() || "?";
 
   return (
@@ -19,12 +19,12 @@ const AdminAvatar = ({ name, size = 100 }) => {
         font-semibold
         select-none
         leading-none
+
+        w-16 h-16 text-3xl
+        sm:w-20 sm:h-20 sm:text-4xl
+        md:w-24 md:h-24 md:text-5xl
+        lg:w-28 lg:h-28 lg:text-6xl
       "
-      style={{
-        width: size,
-        height: size,
-        fontSize: size * 0.6,
-      }}
     >
       {initial}
     </div>
