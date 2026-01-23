@@ -5,6 +5,7 @@ const QueueTicket = require("../models/queue/QueueTicket");
 const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const { notifyNewQueue, notifyStatusUpdate } = require("../socket");
+const { authorizeRoles } = require("../middleware/roleMiddleware");
 
 class ClientController {
 
@@ -339,8 +340,6 @@ class ClientController {
                     waiting.push(q);
                 }
             });
-
-            console.log("Queues today grouped by status:", { waiting, completed, expired });
 
             res.status(200).json({
                 waiting,
