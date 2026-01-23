@@ -25,7 +25,7 @@ const AdminSettingContent = ({ activeTab }) => {
                 {user?.username}
               </p>
 
-              <p className="text-xs uppercase sm:text-sm md:text-base text-[var(--text-color)]">
+              <p className="text-xs uppercase text-[var(--text-color)]">
                 {user?.role}
               </p>
             </div>
