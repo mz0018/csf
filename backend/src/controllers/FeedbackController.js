@@ -1,14 +1,33 @@
 const Feedback = require('../models/feedbacks/FeedbackSchema');
 
 class FeedbackController {
+
     async getFeedbacks(req, res) {
         try {
-            const feedbacks = await Feedback.find();
+            const { officeId } = req.params;
 
-            console.log(feedbacks);
-            // res.json(feedbacks);
+            const page = Number(req.query.page) || 1;
+            const limit = 15;
+            const skip = (page -1) * limit;
+
+            const filter = { selectedOffice: officeId };
+
+            const total = await Feedback.countDocuments(filter);
+            
+            const feedback = await Feedback.find(filter)
+                .sort({ submittedAt: -1 })
+                .skip(skip)
+                .limit(limit);
+
+            res.status(200).json({
+                feedback,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit),
+            });
+
         } catch (err) {
-            console.error(err);
+            console.error("Backend error:", err);
             res.status(500).json({ message: 'Server error' });
         }
     }

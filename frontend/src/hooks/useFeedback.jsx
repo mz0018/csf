@@ -1,30 +1,47 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import api from "../services/api";
+import axios from "axios";
 
-const useFeedback = () => {
+const useFeedback = (selectedOfficeId, enabled = true) => {
   const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const getFeedbacks = async () => {
-    try {
-      setLoading(true);
-      const response = await api.get("/client/feedback");
-      setData(response.data);
-    } catch (err) {
-      console.error("Something went wrong!", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [feedback, setFeedback] = useState([]);
 
   useEffect(() => {
-    if (user) getFeedbacks();
-  }, [user]);
+    if (!enabled || !user || !selectedOfficeId) return;
 
-  return { loading, data };
+    const controller = new AbortController();
+
+    const getFeedbacks = async () => {
+      try {
+        setLoading(true);
+
+        if (Number(selectedOfficeId) === 20) {
+          console.log("Show IT data in here")
+        }
+
+        const response = await api.get(
+          `/client/feedback/${selectedOfficeId}`
+        );
+
+        setFeedback(response.data);
+      } catch (err) {
+        if (!axios.isCancel(err)) {
+          console.error("Something went wrong!", err);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getFeedbacks();
+
+    return () => controller.abort();
+  }, [user, selectedOfficeId, enabled]);
+
+  return { loading, feedback };
 };
 
 export default useFeedback;

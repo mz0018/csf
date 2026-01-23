@@ -1,14 +1,16 @@
-import useFeedback from "../../hooks/useFeedback";
+import { useAuth } from "../../context/AuthContext";
+import AdminFeedbackTable from "../../components/AdminComponents/AdminFeedbackTable";
 
 const FeedbackSection = () => {
-
-  const { loading, data } = useFeedback();
-
-  if (loading) return <>Loading...</>;
+  const { user } = useAuth();
 
   return (
-    <>Return this when user is hr-admin</>
-  );
+    <>
+    {user?.role === 'hr-admin' && user?.officeId === 9 && (
+      <AdminFeedbackTable />
+    )}
+    </>
+  )
 };
 
 export default FeedbackSection;

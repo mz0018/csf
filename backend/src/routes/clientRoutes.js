@@ -21,6 +21,6 @@ router.get('/me', protect, (req, res) => ClientController.getCurrentUser(req, re
 router.get('/getqueue/:id', protect, ClientController.getAllQueue);
 router.get('/getByDateToday/:officeId', ClientController.getQueueToday);
 
-router.get('/feedback', protect, authorizeRole('hr-admin'), FeedbackController.getFeedbacks);
+router.get('/feedback/:officeId', protect, authorizeRole('hr-admin'), FeedbackController.getFeedbacks);
 
 module.exports = router;
