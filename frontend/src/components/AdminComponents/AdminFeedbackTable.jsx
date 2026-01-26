@@ -7,11 +7,17 @@ const AdminFeedbackTable = () => {
   const [selectedOfficeId, setSelectedOfficeId] = useState("9");
   const { loading, feedback: feedbackData } = useFeedback(selectedOfficeId);
 
+
   const feedbacks = feedbackData?.feedback || [];
+  const averages  = feedbackData?.averages || {};
 
   const handleOfficeChange = (e) => {
     setSelectedOfficeId(e.target.value);
   };
+
+  feedbacks.forEach(f => {
+    console.log(f)
+  });
 
   return (
     <div>
@@ -89,7 +95,10 @@ const AdminFeedbackTable = () => {
                     })}
                   </td>
                   <td className="border-b border-gray-200 px-6 py-6">
-                    Show feedback specific rating in here
+                    <span className="font-semibold text-[var(--button-color)]">
+                      {averages[f._id]?.toFixed(2) ?? "—"}
+                    </span>
+                    <span className="ml-1 text-xs text-gray-500">/ 5</span>
                   </td>
                   <td className="border-b border-gray-200 px-6 py-6">
                     <ExternalLink className="h-4 w-4 cursor-pointer" />
