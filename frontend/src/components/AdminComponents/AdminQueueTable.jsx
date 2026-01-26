@@ -78,7 +78,7 @@ const AdminQueueTable = () => {
         <AdminQueueEmptyTableFallback />
       ) : (
         <>
-          <div className="bg-[var(--table-color)] hidden sm:block overflow-x-auto mt-4 text-left">
+          <div className="bg-[var(--table-color)] hidden sm:block overflow-x-auto mt-4 text-left rounded">
             {officeId !== 20 ? (
               <table className="table-auto w-full">
                 <thead>

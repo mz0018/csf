@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useFeedback from "../../hooks/useFeedback";
 import { offices } from "../../mocks/Offices";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Building2 } from "lucide-react";
 
 const AdminFeedbackTable = () => {
   const [selectedOfficeId, setSelectedOfficeId] = useState("9");
@@ -20,19 +20,21 @@ const AdminFeedbackTable = () => {
         {/* Keep your filter here if needed */}
       </div>
 
-      {/* Title */}
-      <h2 className="text-2xl font-bold mb-4">HR Admin Feedback Section</h2>
+      <div className="mb-4 text-[var(--black-csf)] flex items-center gap-3">
+        <Building2 className="w-5 h-5 text-[var(--button-color)]" />
 
-      {/* Office Select */}
-      <div className="mb-4">
-        <label htmlFor="office-select" className="mr-2 font-medium">
+        <label htmlFor="office-select" className="font-medium">
           Select Office:
         </label>
+
         <select
           id="office-select"
           value={selectedOfficeId}
           onChange={handleOfficeChange}
-          className="border border-gray-300 rounded px-2 py-1"
+          className="rounded bg-[var(--table-color)] px-2 py-1 text-sm cursor-pointer
+                    border-none outline-none appearance-none
+                    focus:outline-none focus:border-none focus:ring-0
+                    hover:bg-[var(--hover-color)]"
         >
           <option value="">-- Choose an Office --</option>
           {offices.map((office) => (
@@ -44,11 +46,11 @@ const AdminFeedbackTable = () => {
       </div>
 
       {/* Loading */}
-      {loading && <p>Loading feedback...</p>}
+      {/* {loading && <p>Loading feedback...</p>} */}
 
       {/* Feedback Table */}
       {feedbacks.length > 0 && (
-        <div className="bg-[var(--table-color)] hidden sm:block overflow-x-auto mt-4 text-left">
+        <div className="bg-[var(--table-color)] hidden sm:block overflow-x-auto mt-4 text-left rounded">
           <table className="table-auto w-full">
             <thead>
               <tr className="capitalize tracking-wider text-[var(--heading-color)]">
@@ -59,10 +61,10 @@ const AdminFeedbackTable = () => {
                   Submitted At
                 </th>
                 <th className="border-b border-gray-200 px-6 py-6" scope="col">
-                  Other Suggestions
+                  Ratings
                 </th>
                 <th className="border-b border-gray-200 px-6 py-6" scope="col">
-                  Options
+                  {/* Options */}
                 </th>
               </tr>
             </thead>
@@ -87,7 +89,7 @@ const AdminFeedbackTable = () => {
                     })}
                   </td>
                   <td className="border-b border-gray-200 px-6 py-6">
-                    {f.otherSuggestions || "-"}
+                    Show feedback specific rating in here
                   </td>
                   <td className="border-b border-gray-200 px-6 py-6">
                     <ExternalLink className="h-4 w-4 cursor-pointer" />
