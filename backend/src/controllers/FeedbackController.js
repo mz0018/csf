@@ -19,6 +19,30 @@ class FeedbackController {
                 .skip(skip)
                 .limit(limit);
 
+            feedback.forEach(fb => {
+                const responsiveness = fb.ratings.find(r => r.name === 'Responsiveness')?.value;
+                const reliability    = fb.ratings.find(r => r.name === 'Reliability')?.value;
+                const accessFacilities = fb.ratings.find(r => r.name === 'Access & Facilities')?.value;
+                const communication  = fb.ratings.find(r => r.name === 'Communication')?.value;
+                const costs          = fb.ratings.find(r => r.name === 'Costs')?.value;
+                const integrity      = fb.ratings.find(r => r.name === 'Integrity')?.value;
+                const assurance      = fb.ratings.find(r => r.name === 'Assurance')?.value;
+                const outcome        = fb.ratings.find(r => r.name === 'Outcome')?.value;
+
+                console.log({
+                    feedbackId: fb._id.toString(),
+                    queue: fb.queueNumber,
+                    responsiveness,
+                    reliability,
+                    accessFacilities,
+                    communication,
+                    costs,
+                    integrity,
+                    assurance,
+                    outcome
+                });
+            });
+
             res.status(200).json({
                 feedback,
                 page,
