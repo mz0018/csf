@@ -2,22 +2,25 @@ import { useState } from "react";
 import useFeedback from "../../hooks/useFeedback";
 import { offices } from "../../mocks/Offices";
 import { ExternalLink, Building2 } from "lucide-react";
+import FeedbackModal from "../../modals/FeedbackModal";
 
 const AdminFeedbackTable = () => {
   const [selectedOfficeId, setSelectedOfficeId] = useState("9");
   const { loading, feedback: feedbackData } = useFeedback(selectedOfficeId);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
 
   const feedbacks = feedbackData?.feedback || [];
-  const averages  = feedbackData?.averages || {};
+  const averages = feedbackData?.averages || {};
 
   const handleOfficeChange = (e) => {
     setSelectedOfficeId(e.target.value);
   };
 
-  feedbacks.forEach(f => {
-    console.log(f)
-  });
+  const openFeedbackModal = (feedback) => {
+    setSelectedFeedback(feedback);
+    setIsModalOpen(true);
+  }
 
   return (
     <div>
@@ -94,14 +97,14 @@ const AdminFeedbackTable = () => {
                       minute: "2-digit",
                     })}
                   </td>
-                  <td className="border-b border-gray-200 px-6 py-6">
-                    <span className="font-semibold text-[var(--button-color)]">
+                  <td className="border-b border-gray-200 text-[var(--text-color)] px-6 py-6">
+                    <span className="">
                       {averages[f._id]?.toFixed(2) ?? "—"}
                     </span>
-                    <span className="ml-1 text-xs text-gray-500">/ 5</span>
+                    <span className="ml-1 text-xs">/ 5</span>
                   </td>
                   <td className="border-b border-gray-200 px-6 py-6">
-                    <ExternalLink className="h-4 w-4 cursor-pointer" />
+                    <ExternalLink className="h-4 w-4 cursor-pointer" onClick={() => openFeedbackModal(f)} />
                   </td>
                 </tr>
               ))}
@@ -169,6 +172,8 @@ const AdminFeedbackTable = () => {
       {!loading && feedbacks.length === 0 && selectedOfficeId && (
         <p className="text-gray-500">No feedback found for this office.</p>
       )}
+
+      <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} feedback={selectedFeedback} />
     </div>
   );
 };
