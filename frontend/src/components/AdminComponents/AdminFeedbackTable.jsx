@@ -173,7 +173,7 @@ const AdminFeedbackTable = () => {
         <p className="text-gray-500">No feedback found for this office.</p>
       )}
 
-      <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} feedback={selectedFeedback} />
+      <FeedbackModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} feedback={selectedFeedback} officeId={selectedOfficeId} />
     </div>
   );
 };
