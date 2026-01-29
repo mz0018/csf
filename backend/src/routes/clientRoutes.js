@@ -1,6 +1,7 @@
 const express = require('express');
 const ClientController = require('../controllers/ClientController');
 const FeedbackController = require('../controllers/FeedbackController');
+const ItrsController = require('../controllers/ItrsController');
 const protect = require('../middleware/authMiddleware');
 const adminQueueLimiter = require('../middleware/adminQueueLimiter');
 const loginLimiter = require('../middleware/loginLimiter');
@@ -22,5 +23,7 @@ router.get('/getqueue/:id', protect, ClientController.getAllQueue);
 router.get('/getByDateToday/:officeId', ClientController.getQueueToday);
 
 router.get('/feedback/:officeId', protect, authorizeRole('hr-admin'), FeedbackController.getFeedbacks);
+
+router.get('/itrs', (req, res) => ItrsController.getItrsData(req, res));
 
 module.exports = router;

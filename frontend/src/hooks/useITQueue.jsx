@@ -8,7 +8,7 @@ const useITQueue = () => {
 
   const lastFetchedRef = useRef(null);
 
-  const API_URL = import.meta.env.VITE_IP_NI_SIR_DAVE;
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const controller = new AbortController();
@@ -16,7 +16,7 @@ const useITQueue = () => {
     const fetchInitial = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(API_URL, {
+        const res = await axios.get(`${API_URL}/client/itrs`, {
           signal: controller.signal,
         });
 
