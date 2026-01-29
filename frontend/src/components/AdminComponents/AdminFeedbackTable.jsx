@@ -32,7 +32,10 @@ const AdminFeedbackTable = () => {
       <div className="mb-4 text-[var(--black-csf)] flex items-center gap-3">
         <Building2 className="w-5 h-5 text-[var(--button-color)]" />
 
-        <label htmlFor="office-select" className="font-medium">
+        <label
+          htmlFor="office-select"
+          className="font-medium whitespace-nowrap hidden sm:block"
+        >
           Select Office:
         </label>
 
@@ -40,7 +43,7 @@ const AdminFeedbackTable = () => {
           id="office-select"
           value={selectedOfficeId}
           onChange={handleOfficeChange}
-          className="rounded bg-[var(--table-color)] px-2 py-1 text-sm cursor-pointer
+          className="min-w-0 whitespace-nowrap rounded bg-[var(--table-color)] px-2 py-1 text-sm cursor-pointer
                     border-none outline-none appearance-none
                     focus:outline-none focus:border-none focus:ring-0
                     hover:bg-[var(--hover-color)]"
@@ -125,22 +128,32 @@ const AdminFeedbackTable = () => {
               <div className="w-1 bg-[var(--button-color)]" />
 
               <div className="flex-1 p-3">
+                {/* Top Row */}
                 <div className="flex justify-between items-start">
-                  <span className="text-xs uppercase text-[var(--text-color)]">
-                    Queue
-                  </span>
-                  <span className="text-xs font-light tracking-wider">
-                    Submitted
-                  </span>
+                  <div>
+                    <div className="text-xs uppercase text-[var(--text-color)]">
+                      Queue
+                    </div>
+                    <div className="font-semibold text-xl text-[var(--black-csf)]">
+                      {f.queueNumber}
+                    </div>
+                  </div>
+
+                  <div className="text-right">
+                    <div className="text-xs font-light tracking-wider text-[var(--heading-color)]">
+                      Average Rating
+                    </div>
+                    <div className="font-semibold text-sm text-[var(--black-csf)]">
+                      {averages[f._id]?.toFixed(2) ?? "—"} / 5
+                    </div>
+                  </div>
                 </div>
 
-                <div className="mt-1 flex items-center gap-2">
-                  <span className="font-semibold text-xl">
-                    {f.queueNumber}
-                  </span>
-                </div>
+                {/* Divider */}
+                <div className="mt-2 border-t border-gray-300" />
 
-                <div className="mt-3 text-xs flex gap-2 uppercase text-[var(--text-color)]">
+                {/* Bottom Row */}
+                <div className="mt-2 text-xs flex gap-2 uppercase text-[var(--text-color)]">
                   <span>
                     {new Date(f.submittedAt).toLocaleDateString("en-US", {
                       day: "2-digit",
@@ -158,10 +171,6 @@ const AdminFeedbackTable = () => {
                       minute: "2-digit",
                     })}
                   </span>
-                </div>
-
-                <div className="mt-2 text-sm text-[var(--text-color)]">
-                  {f.otherSuggestions || "-"}
                 </div>
               </div>
             </div>

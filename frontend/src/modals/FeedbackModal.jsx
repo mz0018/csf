@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { offices } from "../mocks/Offices";
+import { PhoneCall } from "lucide-react";
 
 const FeedbackModal = ({ isOpen, onClose, feedback, officeId }) => {
   const [isClosing, setIsClosing] = useState(false);
@@ -29,10 +30,10 @@ const FeedbackModal = ({ isOpen, onClose, feedback, officeId }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-      <div className="absolute inset-0 bg-black/50" onClick={handleClose} />
+      <div className="absolute inset-0 bg-black/50" />
 
       <div className={`relative z-10 w-full sm:max-w-xl bg-white shadow-lg rounded max-h-[90vh] overflow-y-auto custom-scrollbar ${isClosing ? "slide-down-modal" : "slide-up-modal"}`}>
-        
+
         <div className="flex items-start justify-between border-b border-gray-200 px-4 py-3 sm:px-6 sm:py-4">
           <div>
             <h2 className="text-base sm:text-lg font-semibold text-[var(--heading-color)]">
@@ -50,8 +51,27 @@ const FeedbackModal = ({ isOpen, onClose, feedback, officeId }) => {
           </button>
         </div>
 
-        <div className="space-y-4 px-4 py-4 sm:space-y-5 sm:px-6 sm:py-4 text-[var(--black-csf)]">
+        <div className="space-y-3 px-3 py-3 sm:space-y-4 sm:px-5 sm:py-3 text-[var(--black-csf)]">
+
+          <div className="space-y-3">
+            <label className="mb-1 block text-sm font-medium">
+              Respondent's Profile <span className="text-red-500">*</span>
+            </label>
+            <input
+              type="text"
+              value={feedback?.respondent.name || "N/A"}
+              readOnly
+              className="capitalize w-full rounded border border-gray-300 px-3 py-2 text-sm text-[var(--black-csf)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+            <input
+              type="text"
+              value={feedback?.respondent.phne || "N/A"}
+              readOnly
+              className="capitalize w-full rounded border border-gray-300 px-3 py-2 text-sm text-[var(--black-csf)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            />
+          </div>
           
+
           <div>
             <label className="mb-1 block text-sm font-medium">
               LGU Office <span className="text-red-500">*</span>
@@ -62,9 +82,6 @@ const FeedbackModal = ({ isOpen, onClose, feedback, officeId }) => {
               readOnly
               className="w-full rounded border border-gray-300 px-3 py-2 text-sm text-[var(--black-csf)] focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
-            <p className="mt-1 text-xs text-[var(--text-color)]">
-              This is the office that received the feedback.
-            </p>
           </div>
 
           {/* Other Suggestions */}
@@ -108,11 +125,13 @@ const FeedbackModal = ({ isOpen, onClose, feedback, officeId }) => {
         </div>
 
         {/* Footer */}
-        <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-gray-200 px-4 py-4 sm:px-6">
-          <p className="text-xs text-[var(--text-color)] capitalize">
-            Client Name: {feedback?.respondent.name}
-          </p>
-          <button className="flex items-center justify-center gap-2 rounded bg-[var(--button-color)] px-5 py-2 text-white hover:bg-[var(--btn-hover-color)] cursor-pointer" onClick={handleClose}>
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-t border-gray-200 px-4 py-4 sm:px-6">
+          
+
+          <button
+            className="flex items-center justify-center gap-2 rounded bg-[var(--button-color)] p-4 text-white hover:bg-[var(--btn-hover-color)] cursor-pointer w-full"
+            onClick={handleClose}
+          >
             Close
           </button>
         </div>
