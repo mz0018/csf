@@ -79,3 +79,34 @@ body {
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 163, 175, 0.6) transparent;
 }
+
+@keyframes slideUpModal {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up-modal {
+  animation: slideUpModal 0.3s ease-out forwards;
+}
+
+@keyframes slideDownModal {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+.slide-down-modal {
+  animation: slideDownModal 0.3s ease-in forwards;
+}
+

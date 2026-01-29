@@ -70,7 +70,7 @@ const AdminFeedbackTable = () => {
                   Submitted At
                 </th>
                 <th className="border-b border-gray-200 px-6 py-6" scope="col">
-                  Ratings
+                  Average Rating
                 </th>
                 <th className="border-b border-gray-200 px-6 py-6" scope="col">
                   {/* Options */}
@@ -119,6 +119,7 @@ const AdminFeedbackTable = () => {
           {feedbacks.map((f) => (
             <div
               key={f._id}
+              onClick={() => openFeedbackModal(f)}
               className="flex rounded-md overflow-hidden bg-[var(--table-color)] hover:bg-[var(--hover-color)] transition-colors cursor-pointer"
             >
               <div className="w-1 bg-[var(--button-color)]" />
