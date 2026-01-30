@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
+import api from "../services/api";
 
 const INITIAL_STATE = {
   firstName: "",
@@ -23,9 +23,7 @@ const useBtnRegisterUser = (onSuccess) => {
     const { name, value, selectedOptions } = e.target;
 
     if (name === "officeId") {
-      const officeName =
-        selectedOptions[0]?.getAttribute("data-name") || "";
-
+      const officeName = selectedOptions[0]?.getAttribute("data-name") || "";
       setFormData((prev) => ({
         ...prev,
         officeId: value,
@@ -46,10 +44,7 @@ const useBtnRegisterUser = (onSuccess) => {
       setIsLoading(true);
       setErrors(null);
 
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_API_URL}/it/register-user`,
-        formData
-      );
+      const { data } = await api.post("/it/register-user", formData);
 
       await Swal.fire({
         icon: "success",
@@ -59,17 +54,12 @@ const useBtnRegisterUser = (onSuccess) => {
       });
 
       onSuccess?.();
-
       resetForm();
       return true;
-
     } catch (err) {
-      const message =
-        err.response?.data?.message || "Something went wrong";
-
+      const message = err.response?.data?.message || "Something went wrong";
       setErrors(message);
       return false;
-
     } finally {
       setIsLoading(false);
     }
