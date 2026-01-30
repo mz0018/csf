@@ -8,6 +8,7 @@ const expireQueueTickets = require("./jobs/expireQueueTickets");
 
 const app = express();
 
+app.set("trust proxy", 1);
 app.use(
     cors({
         origin: ["http://localhost:5173", "http://localhost:5174", "http://192.168.110.16", "http://139.135.180.134","http://49.150.198.132"],
